@@ -1,0 +1,31 @@
+disabled_rules: # rule identifiers to exclude from running
+  - colon # exaclty one space after the : >>> let abc: Void\n
+  - todo # TODO can be written in the code but should be linked to a ticket on JIRA.
+  - trailing_whitespace
+  - comment_spacing
+
+excluded:
+  - Pods
+
+file_length:
+  - 600 #warning
+  - 800 #error
+
+function_body_length:
+  - 40 #warning
+  - 80 #error
+
+line_length:
+  - 400 #warning
+  - 500 #error
+
+type_body_length:
+  - 400 #warning
+  - 500 #error
+identifier_name:
+  min_length: # only min_length
+    error: 4 # only error
+  excluded: # excluded via string array
+    - id
+    - URL
+    - GlobalAPIKey

@@ -52,13 +52,11 @@ extension CoreData {
             error.onNext(CoreDataError.contexNotFound.rawValue)
             return
         }
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Record")
+        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
         
         do {
-            guard let recordObject = try managedContext.fetch(fetchRequest) as? [Record] else {
-                error.onNext(CoreDataError.contexNotFound.rawValue)
-                return
-            }
+            
+            let recordObject = try managedContext.fetch(fetchRequest)
             let arrayRecord = recordObject.map {
                 RecordModel(amountType: AmountType(rawValue: Int($0.amountType)) ?? .unknown,
                             amount: $0.amount ,
@@ -98,6 +96,46 @@ extension CoreData {
             records.onNext(arrayRecord)
         } catch let customError {
             error.onNext(customError.localizedDescription)
+        }
+    }
+    
+    func getTotalSum() {
+        guard let managedContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+            error.onNext(CoreDataError.contexNotFound.rawValue)
+            return
+        }
+//        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
+//        fetchRequest.resultType = .dictionaryResultType
+//        let sumExpression = NSExpression(format: "sum:(amount)")
+//        let sumED = NSExpressionDescription()
+//        sumED.expression = sumExpression
+//        sumED.name = "sumOfAmount"
+//        sumED.expressionResultType = .doubleAttributeType
+//        fetchRequest.propertiesToFetch = ["amount", sumED]
+//        //fetchRequest.propertiesToGroupBy = ["amound"]
+//
+//        do {
+//            let results = try managedContext.execute(fetchRequest)
+//            debugPrint(results)
+//        } catch {
+//            debugPrint(error.localizedDescription)
+//        }
+        
+        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
+        fetchRequest.resultType = .dictionaryResultType
+        fetchRequest.returnsObjectsAsFaults = false
+
+        let expression = NSExpressionDescription()
+        expression.expression =  NSExpression(forFunction: "sum:", arguments:[NSExpression(forKeyPath: "amount")])
+        expression.name = "sumOfEstimatedValue"
+        expression.expressionResultType = .decimalAttributeType
+        fetchRequest.propertiesToFetch = [expression]
+
+        do {
+            let opportunityAggregates = try managedContext.execute(fetchRequest)
+            print(opportunityAggregates)
+        } catch {
+            print("Failed to fetch aggregates")
         }
     }
     

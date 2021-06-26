@@ -41,6 +41,11 @@
 		6EC9D7CE26836FBA00846EFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EC9D7CC26836FBA00846EFE /* Main.storyboard */; };
 		6EC9D7D326836FBD00846EFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EC9D7D226836FBD00846EFE /* Assets.xcassets */; };
 		6EC9D7E126836FBD00846EFE /* DailyLogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC9D7E026836FBD00846EFE /* DailyLogsTests.swift */; };
+		6EF6B31926877D9B00834789 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF6B31626877D9B00834789 /* Alert.swift */; };
+		6EF6B31A26877D9B00834789 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF6B31726877D9B00834789 /* AlertMessage.swift */; };
+		6EF6B31B26877D9B00834789 /* AlertTitle&Btn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF6B31826877D9B00834789 /* AlertTitle&Btn.swift */; };
+		6EF6B31D26877EDE00834789 /* AppDelegate+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF6B31C26877EDE00834789 /* AppDelegate+Ext.swift */; };
+		6EFBA76F26874A4000394053 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFBA76E26874A4000394053 /* UserData.swift */; };
 		C3BABBC542814B4F4FEC2527 /* Pods_DailyLogs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99AA6C8CC2CCDDB265723520 /* Pods_DailyLogs.framework */; };
 		EFCA436FD3EF5F53571F0D15 /* Pods_DailyLogsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08DE38C906191E062A692CF /* Pods_DailyLogsTests.framework */; };
 /* End PBXBuildFile section */
@@ -98,6 +103,11 @@
 		6EC9D7DC26836FBD00846EFE /* DailyLogsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyLogsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EC9D7E026836FBD00846EFE /* DailyLogsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyLogsTests.swift; sourceTree = "<group>"; };
 		6EC9D7E226836FBD00846EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EF6B31626877D9B00834789 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		6EF6B31726877D9B00834789 /* AlertMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
+		6EF6B31826877D9B00834789 /* AlertTitle&Btn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertTitle&Btn.swift"; sourceTree = "<group>"; };
+		6EF6B31C26877EDE00834789 /* AppDelegate+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Ext.swift"; sourceTree = "<group>"; };
+		6EFBA76E26874A4000394053 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		6F38E4FE134AB018D646C978 /* Pods-DailyLogs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DailyLogs.release.xcconfig"; path = "Target Support Files/Pods-DailyLogs/Pods-DailyLogs.release.xcconfig"; sourceTree = "<group>"; };
 		99AA6C8CC2CCDDB265723520 /* Pods_DailyLogs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyLogs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A08DE38C906191E062A692CF /* Pods_DailyLogsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyLogsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,6 +180,8 @@
 			children = (
 				6E5D130326844BA5003E227B /* Extension */,
 				6E5D131F2684794F003E227B /* Enums.swift */,
+				6EFBA76E26874A4000394053 /* UserData.swift */,
+				6EF6B31526877D9B00834789 /* Alert */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -178,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				6E5D130426844BB3003E227B /* String.swift */,
+				6EF6B31C26877EDE00834789 /* AppDelegate+Ext.swift */,
 				6E5D130E268465A8003E227B /* UIStoryboad.swift */,
 				6E5D131226846730003E227B /* UIColor.swift */,
 				6E5D132126847A84003E227B /* UIView.swift */,
@@ -323,6 +336,16 @@
 				6E5D1316268472BB003E227B /* CreateRecordController */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		6EF6B31526877D9B00834789 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				6EF6B31626877D9B00834789 /* Alert.swift */,
+				6EF6B31726877D9B00834789 /* AlertMessage.swift */,
+				6EF6B31826877D9B00834789 /* AlertTitle&Btn.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		AE052C97A5666AAADA65DBF5 /* Pods */ = {
@@ -559,14 +582,19 @@
 				6E5D130126844AF1003E227B /* LoginViewModel.swift in Sources */,
 				6E026DAD26861F1A00D68A77 /* Record+CoreDataProperties copy.swift in Sources */,
 				6E026DAF26861F1A00D68A77 /* User+CoreDataProperties copy.swift in Sources */,
+				6EF6B31A26877D9B00834789 /* AlertMessage.swift in Sources */,
 				6E5D132726848449003E227B /* Date.swift in Sources */,
+				6EF6B31B26877D9B00834789 /* AlertTitle&Btn.swift in Sources */,
+				6EF6B31926877D9B00834789 /* Alert.swift in Sources */,
 				6E026D932686080900D68A77 /* DailyLogs.xcdatamodeld in Sources */,
 				6E5D131B2684733A003E227B /* CreateRecordCell.swift in Sources */,
 				6E5D13202684794F003E227B /* Enums.swift in Sources */,
 				6E5D132526847BAC003E227B /* CreateRecordViewModel.swift in Sources */,
+				6EFBA76F26874A4000394053 /* UserData.swift in Sources */,
 				6E5D130D26846410003E227B /* RecordCell.swift in Sources */,
 				6E5D131326846730003E227B /* UIColor.swift in Sources */,
 				6E5D130526844BB3003E227B /* String.swift in Sources */,
+				6EF6B31D26877EDE00834789 /* AppDelegate+Ext.swift in Sources */,
 				6EC9D7C926836FBA00846EFE /* SceneDelegate.swift in Sources */,
 				6E5D131E2684791B003E227B /* RecordModel.swift in Sources */,
 				6E48C6F82683747400E464B5 /* SplashController.swift in Sources */,

@@ -16,6 +16,7 @@ final class LoginController: UIViewController {
     @IBOutlet weak var passwordTextField        : UITextField!
     @IBOutlet weak var loginButton              : UIButton!
     @IBOutlet weak var registerButton           : UIButton!
+    @IBOutlet weak var rememberPasswordButton   : UIButton!
     @IBOutlet weak var showPasswordButton       : UIButton!
     @IBOutlet weak var viewShowPasswordButton   : UIView!
     
@@ -42,8 +43,11 @@ final class LoginController: UIViewController {
         passwordTextField.rightView = viewShowPasswordButton
         passwordTextField.rightViewMode = .always
         
-        mailTextField.text = "a@g.net"
-        passwordTextField.text = "asd"
+        if UserData.returnValue(.isRemember) as? Bool ?? false {
+            rememberPasswordButton.isSelected = true
+            mailTextField.text = UserData.returnValue(.mail) as? String ?? ""
+            passwordTextField.text = UserData.returnValue(.password) as? String ?? ""
+        }
     }
     
     func bindView() {
@@ -65,6 +69,23 @@ final class LoginController: UIViewController {
                 self?.coreData.createNewUser(mail: mail, password: password)
             })
             .disposed(by: disposeBag)
+        
+        self.rememberPasswordButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            self.rememberPasswordButton.isSelected.toggle()
+            UserData.saveData(.isRemember, self.rememberPasswordButton.isSelected)
+        })
+        .disposed(by: disposeBag)
+        loginViewModel.showPasswordBehaviorRelay.asObservable().bind(to: showPasswordButton.rx.isSelected).disposed(by: disposeBag)
+        
+        showPasswordButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+            if let self = self {
+                self.loginViewModel.showPasswordBehaviorRelay.accept(!self.loginViewModel.showPasswordBehaviorRelay.value)
+                self.passwordTextField.isSecureTextEntry = self.loginViewModel.showPasswordBehaviorRelay.value
+            }
+        }).disposed(by: disposeBag)
     }
     
     func bindView_() {
@@ -83,15 +104,13 @@ final class LoginController: UIViewController {
         loginViewModel.isValid().map {$0 ? 1 : 0.3}.bind(to: loginButton.rx.alpha).disposed(by: disposeBag)
     }
     
-    @IBAction private func onLoginButtonPressed(_ sender: UIButton) {
-    }
-    
-    @IBAction private func onRegisterButtonPressed(_ sender: UIButton) {
-    }
-    
     func bindCoreDataModel() {
         coreData.login.subscribe(onNext: { [weak self] users in
             guard let self = self, let user = users.first else { return }
+            if self.rememberPasswordButton.isSelected {
+                UserData.saveData(.mail, user.mail ?? "")
+                UserData.saveData(.password, user.password ?? "")
+            }
             self.pushRecordsController(user)
         })
         .disposed(by: disposeBag)

@@ -17,7 +17,10 @@ final class RecordsController: UIViewController {
     @IBOutlet weak var startDateTextField   : UITextField!
     @IBOutlet weak var endDateTextField     : UITextField!
     @IBOutlet weak var searchRecordButton   : UIButton!
-    
+    @IBOutlet weak var creditedLabel        : UILabel!
+    @IBOutlet weak var debitedLabel         : UILabel!
+    @IBOutlet weak var balanceLabel         : UILabel!
+        
     let startDatePicker = UIDatePicker()
     let endDatePicker = UIDatePicker()
     
@@ -59,6 +62,9 @@ final class RecordsController: UIViewController {
         endDatePicker.date = Date().endOfMonth()
         startDateTextField.text = startDatePicker.date.getString() ?? ""
         endDateTextField.text = endDatePicker.date.getString() ?? ""
+        
+        creditedLabel.textColor = .green
+        debitedLabel.textColor = .red
     }
     
     func bindView() {
@@ -66,6 +72,23 @@ final class RecordsController: UIViewController {
             .bind(to: recordsTableView.rx.items(cellIdentifier: String(describing: RecordCell.self), cellType: RecordCell.self)) { _, model, cell in
                 cell.setData(model)
             }
+            .disposed(by: disposeBag)
+        
+        records.asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let creditedAmount = self.records.value
+                    .filter { $0.amountType == .credited }
+                    .reduce(0) {
+                        return $0 + $1.amount
+                    }
+                let debitedAmount = self.records.value
+                    .filter { $0.amountType == .debited }
+                    .reduce(0) {
+                        return $0 + $1.amount
+                    }
+                self.setAmount(credited: creditedAmount, debited: debitedAmount)
+            })
             .disposed(by: disposeBag)
         
         startDatePicker.rx
@@ -96,6 +119,8 @@ final class RecordsController: UIViewController {
     }
     
     func pushCreateRecordController() {
+        coreData.getTotalSum()
+        
         guard let createRecordController = UIStoryboard.records.instantiateViewController(withIdentifier: String(describing: CreateRecordController.self)) as? CreateRecordController else { return }
         self.navigationController?.pushViewController(createRecordController, animated: true)
     }
@@ -114,6 +139,14 @@ final class RecordsController: UIViewController {
         })
         .disposed(by: disposeBag)
         coreData.fetchRecords(startDate: startDatePicker.date as NSDate, endDate: endDatePicker.date as NSDate)
+    }
+    
+    func setAmount(credited: Double, debited: Double) {
+        creditedLabel.text = "\(credited)"
+        debitedLabel.text = "\(debited)"
+        let balanceAmount = credited - debited
+        balanceLabel.text = "\(balanceAmount)"
+        balanceLabel.textColor = balanceAmount >= 0 ? .green : .red
     }
     
     override func didReceiveMemoryWarning() {

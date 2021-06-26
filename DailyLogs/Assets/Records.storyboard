@@ -93,8 +93,76 @@
                                             <constraint firstAttribute="trailing" secondItem="6c1-N8-k24" secondAttribute="trailing" constant="15" id="wQz-M7-ALN"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VDP-Oi-uKx">
+                                        <rect key="frame" x="0.0" y="61.5" width="414" height="60"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ivS-x8-vFv">
+                                                <rect key="frame" x="20" y="10" width="374" height="31.5"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wXo-0u-5Uj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="116.5" height="31.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CREDITED" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGp-yM-1SR">
+                                                                <rect key="frame" x="0.0" y="0.0" width="116.5" height="12"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="x5L-ba-Vtq">
+                                                                <rect key="frame" x="0.0" y="12" width="116.5" height="19.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pMc-K6-F0G">
+                                                        <rect key="frame" x="128.5" y="0.0" width="117" height="31.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEBITED" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r3O-ed-YtY">
+                                                                <rect key="frame" x="0.0" y="0.0" width="117" height="12"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="s1B-EG-4vc">
+                                                                <rect key="frame" x="0.0" y="12" width="117" height="19.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IZd-G0-s5i">
+                                                        <rect key="frame" x="257.5" y="0.0" width="116.5" height="31.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BALANCE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sol-6i-dS0">
+                                                                <rect key="frame" x="0.0" y="0.0" width="116.5" height="12"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="8Oi-eK-vAq">
+                                                                <rect key="frame" x="0.0" y="12" width="116.5" height="19.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" name="customBackground"/>
+                                        <constraints>
+                                            <constraint firstItem="ivS-x8-vFv" firstAttribute="top" secondItem="VDP-Oi-uKx" secondAttribute="top" constant="10" id="Feo-eV-WzC"/>
+                                            <constraint firstAttribute="trailing" secondItem="ivS-x8-vFv" secondAttribute="trailing" constant="20" id="Qtg-IN-60x"/>
+                                            <constraint firstAttribute="height" constant="60" id="WXH-YR-e43"/>
+                                            <constraint firstItem="ivS-x8-vFv" firstAttribute="leading" secondItem="VDP-Oi-uKx" secondAttribute="leading" constant="20" id="aG3-cF-3Q2"/>
+                                        </constraints>
+                                    </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iW7-Hn-H07">
-                                        <rect key="frame" x="0.0" y="61.5" width="414" height="711.5"/>
+                                        <rect key="frame" x="0.0" y="121.5" width="414" height="651.5"/>
                                         <color key="backgroundColor" name="customBackground"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecordCell" rowHeight="157" id="DxY-vP-4nP" customClass="RecordCell" customModule="DailyLogs" customModuleProvider="target">
@@ -205,7 +273,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="balanceLabel" destination="8Oi-eK-vAq" id="Bqv-j9-Viu"/>
                         <outlet property="createRecordButton" destination="qVj-m0-ug8" id="axx-GF-HRQ"/>
+                        <outlet property="creditedLabel" destination="x5L-ba-Vtq" id="Ruf-kQ-SGG"/>
+                        <outlet property="debitedLabel" destination="s1B-EG-4vc" id="08q-Ua-vAh"/>
                         <outlet property="endDateTextField" destination="HmH-Tb-TvQ" id="PzG-wp-uqj"/>
                         <outlet property="recordsTableView" destination="iW7-Hn-H07" id="OvG-ha-lE1"/>
                         <outlet property="searchRecordButton" destination="BUK-Xj-7QZ" id="vp6-VB-Rpq"/>

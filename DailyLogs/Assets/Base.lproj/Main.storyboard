@@ -113,7 +113,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hh7-z1-Sat">
-                                <rect key="frame" x="30" y="443" width="354" height="45"/>
+                                <rect key="frame" x="30" y="513" width="354" height="45"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e18-ga-kWH">
                                         <rect key="frame" x="0.0" y="0.0" width="172" height="45"/>
@@ -125,9 +125,6 @@
                                         <state key="normal" title="REGISTER">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
-                                        <connections>
-                                            <action selector="onRegisterButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tav-Rd-IHd"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OaO-lO-Dav">
                                         <rect key="frame" x="182" y="0.0" width="172" height="45"/>
@@ -139,18 +136,36 @@
                                         <state key="normal" title="LOGIN">
                                             <color key="titleColor" systemColor="systemBackgroundColor"/>
                                         </state>
-                                        <connections>
-                                            <action selector="onLoginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KLZ-X1-Jnz"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NMA-os-Ghy">
+                                <rect key="frame" x="30" y="423" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ZtE-UG-M0H"/>
+                                    <constraint firstAttribute="width" constant="30" id="jkN-xE-B2w"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemIndigoColor"/>
+                                <state key="normal" image="square" catalog="system"/>
+                                <state key="selected" image="checkmark.square.fill" catalog="system"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yvL-k8-92L">
+                                <rect key="frame" x="60" y="429.5" width="324" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="NMA-os-Ghy" firstAttribute="leading" secondItem="3f5-eX-sTn" secondAttribute="leading" id="Dlp-Ls-9HS"/>
+                            <constraint firstItem="yvL-k8-92L" firstAttribute="trailing" secondItem="3f5-eX-sTn" secondAttribute="trailing" id="Fuj-Xn-n68"/>
                             <constraint firstItem="3f5-eX-sTn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="INX-69-XO8"/>
-                            <constraint firstItem="hh7-z1-Sat" firstAttribute="top" secondItem="3f5-eX-sTn" secondAttribute="bottom" constant="30" id="IVV-tF-fOZ"/>
+                            <constraint firstItem="hh7-z1-Sat" firstAttribute="top" secondItem="3f5-eX-sTn" secondAttribute="bottom" constant="100" id="IVV-tF-fOZ"/>
+                            <constraint firstItem="yvL-k8-92L" firstAttribute="centerY" secondItem="NMA-os-Ghy" secondAttribute="centerY" id="XtY-U1-F2x"/>
+                            <constraint firstItem="yvL-k8-92L" firstAttribute="leading" secondItem="NMA-os-Ghy" secondAttribute="trailing" id="b6D-RG-Vj8"/>
+                            <constraint firstItem="NMA-os-Ghy" firstAttribute="top" secondItem="3f5-eX-sTn" secondAttribute="bottom" constant="10" id="dqb-5s-jkn"/>
                             <constraint firstItem="hh7-z1-Sat" firstAttribute="leading" secondItem="3f5-eX-sTn" secondAttribute="leading" id="esv-no-j11"/>
                             <constraint firstItem="3f5-eX-sTn" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.75" id="gzB-Dk-SU7"/>
                             <constraint firstItem="hh7-z1-Sat" firstAttribute="trailing" secondItem="3f5-eX-sTn" secondAttribute="trailing" id="oeg-hY-C8S"/>
@@ -162,6 +177,7 @@
                         <outlet property="mailTextField" destination="N9i-dv-NzT" id="Ksv-vv-xGl"/>
                         <outlet property="passwordTextField" destination="tth-xv-Cyt" id="wjT-gd-Kc0"/>
                         <outlet property="registerButton" destination="e18-ga-kWH" id="8dY-m0-wiV"/>
+                        <outlet property="rememberPasswordButton" destination="NMA-os-Ghy" id="8wE-fM-v8F"/>
                         <outlet property="showPasswordButton" destination="sTR-c5-0L8" id="CMn-2b-Amd"/>
                         <outlet property="viewShowPasswordButton" destination="f6o-YJ-kA3" id="VdW-bp-D1W"/>
                     </connections>
@@ -172,6 +188,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTR-c5-0L8">
                             <rect key="frame" x="2" y="2" width="39" height="41"/>
+                            <color key="tintColor" systemColor="systemIndigoColor"/>
                             <state key="normal" image="eye.slash.fill" catalog="system"/>
                             <state key="selected" image="eye.fill" catalog="system"/>
                         </button>
@@ -207,8 +224,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark.square.fill" catalog="system" width="128" height="114"/>
         <image name="eye.fill" catalog="system" width="128" height="78"/>
         <image name="eye.slash.fill" catalog="system" width="128" height="82"/>
+        <image name="square" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

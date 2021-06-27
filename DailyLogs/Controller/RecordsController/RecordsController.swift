@@ -112,6 +112,12 @@ final class RecordsController: UIViewController {
             self.coreData.fetchRecords(startDate: self.startDatePicker.date as NSDate, endDate: self.endDatePicker.date as NSDate)
         })
         .disposed(by: disposeBag)
+        
+        recordsTableView.rx.itemDeleted
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.deleteRecord(indexPath.row)
+            })
+            .disposed(by: disposeBag)
     }
     
     @IBAction private func onCreateNewRecordButtonPressed(_ sender: UIButton) {
@@ -119,8 +125,6 @@ final class RecordsController: UIViewController {
     }
     
     func pushCreateRecordController() {
-        coreData.getTotalSum()
-        
         guard let createRecordController = UIStoryboard.records.instantiateViewController(withIdentifier: String(describing: CreateRecordController.self)) as? CreateRecordController else { return }
         self.navigationController?.pushViewController(createRecordController, animated: true)
     }
@@ -139,6 +143,14 @@ final class RecordsController: UIViewController {
         })
         .disposed(by: disposeBag)
         coreData.fetchRecords(startDate: startDatePicker.date as NSDate, endDate: endDatePicker.date as NSDate)
+    }
+    
+    func deleteRecord(_ indexPathRow: Int) {
+        let recordToDelete = self.records.value[indexPathRow]
+        var array = self.records.value
+        array.remove(at: indexPathRow)
+        self.coreData.deleteRecord(recordToDelete)
+        self.records.accept(array)
     }
     
     func setAmount(credited: Double, debited: Double) {

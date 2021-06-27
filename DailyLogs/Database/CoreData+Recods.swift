@@ -32,7 +32,7 @@ extension CoreData {
         record.amount = recordObject.amount
         record.amountType = Int16(recordObject.amountType.rawValue)
         record.createdOn = recordObject.date
-        //record.id =
+        record.id = Int64(recordCount())
         //record.person = recordObject.person
         
         do {
@@ -41,6 +41,19 @@ extension CoreData {
         } catch let customError {
             error.onNext(customError.localizedDescription)
         }
+    }
+    
+    private func recordCount() -> Int {
+        guard let managedContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+            return 0
+        }
+        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
+        do {
+            return try managedContext.fetch(fetchRequest).count
+        } catch let customError {
+            debugPrint(customError.localizedDescription)
+        }
+        return 0
     }
     
     func fetchRecords() {
@@ -86,7 +99,8 @@ extension CoreData {
         do {
              let recordObject = try managedContext.fetch(fetchRequest)
             let arrayRecord = recordObject.map {
-                RecordModel(amountType: AmountType(rawValue: Int($0.amountType)) ?? .unknown,
+                RecordModel(id: $0.id,
+                            amountType: AmountType(rawValue: Int($0.amountType)) ?? .unknown,
                             amount: $0.amount ,
                             title: $0.title ?? "",
                             date: $0.createdOn,
@@ -99,43 +113,27 @@ extension CoreData {
         }
     }
     
-    func getTotalSum() {
+    func deleteRecord(_ record: RecordModel) {
+        loading.onNext(false)
+        defer {
+            loading.onNext(false)
+        }
         guard let managedContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
             error.onNext(CoreDataError.contexNotFound.rawValue)
             return
         }
-//        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
-//        fetchRequest.resultType = .dictionaryResultType
-//        let sumExpression = NSExpression(format: "sum:(amount)")
-//        let sumED = NSExpressionDescription()
-//        sumED.expression = sumExpression
-//        sumED.name = "sumOfAmount"
-//        sumED.expressionResultType = .doubleAttributeType
-//        fetchRequest.propertiesToFetch = ["amount", sumED]
-//        //fetchRequest.propertiesToGroupBy = ["amound"]
-//
-//        do {
-//            let results = try managedContext.execute(fetchRequest)
-//            debugPrint(results)
-//        } catch {
-//            debugPrint(error.localizedDescription)
-//        }
-        
         let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
-        fetchRequest.resultType = .dictionaryResultType
-        fetchRequest.returnsObjectsAsFaults = false
-
-        let expression = NSExpressionDescription()
-        expression.expression =  NSExpression(forFunction: "sum:", arguments:[NSExpression(forKeyPath: "amount")])
-        expression.name = "sumOfEstimatedValue"
-        expression.expressionResultType = .decimalAttributeType
-        fetchRequest.propertiesToFetch = [expression]
-
+        fetchRequest.predicate = NSPredicate(format: "id == %d AND createdOn == %@", record.id, record.date! as NSDate)
+        
         do {
-            let opportunityAggregates = try managedContext.execute(fetchRequest)
-            print(opportunityAggregates)
-        } catch {
-            print("Failed to fetch aggregates")
+             let recordObject = try managedContext.fetch(fetchRequest)
+            recordObject.forEach { recordObj in
+                managedContext.delete(recordObj)
+            }
+            try managedContext.save()
+            records.onNext([])
+        } catch let customError {
+            error.onNext(customError.localizedDescription)
         }
     }
     

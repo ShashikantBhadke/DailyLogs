@@ -8,6 +8,7 @@
 import Foundation
 
 struct RecordModel {
+    var id: Int64 = 0
     var amountType: AmountType
     var amount: Double = 0
     var title: String = ""

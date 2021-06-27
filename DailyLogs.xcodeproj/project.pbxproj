@@ -8,12 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6E026D932686080900D68A77 /* DailyLogs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E026D912686080900D68A77 /* DailyLogs.xcdatamodeld */; };
-		6E026DAA26861F1A00D68A77 /* Record+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E026DA426861F1A00D68A77 /* Record+CoreDataClass copy.swift */; };
-		6E026DAB26861F1A00D68A77 /* Person+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E026DA526861F1A00D68A77 /* Person+CoreDataProperties copy.swift */; };
-		6E026DAC26861F1A00D68A77 /* Person+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E026DA626861F1A00D68A77 /* Person+CoreDataClass copy.swift */; };
-		6E026DAD26861F1A00D68A77 /* Record+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E026DA726861F1A00D68A77 /* Record+CoreDataProperties copy.swift */; };
-		6E026DAE26861F1A00D68A77 /* User+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E026DA826861F1A00D68A77 /* User+CoreDataClass copy.swift */; };
-		6E026DAF26861F1A00D68A77 /* User+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E026DA926861F1A00D68A77 /* User+CoreDataProperties copy.swift */; };
 		6E026DB326861F5400D68A77 /* CoreData+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E026DB226861F5400D68A77 /* CoreData+User.swift */; };
 		6E026DB726861F8900D68A77 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E026DB626861F8900D68A77 /* CoreData.swift */; };
 		6E48C6F82683747400E464B5 /* SplashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E48C6F72683747400E464B5 /* SplashController.swift */; };
@@ -35,6 +29,13 @@
 		6E5D132726848449003E227B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D132626848449003E227B /* Date.swift */; };
 		6E5D13292684847C003E227B /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D13282684847C003E227B /* DateFormatter.swift */; };
 		6E6800EF2685B4E9007DF40F /* CoreData+Recods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6800EE2685B4E9007DF40F /* CoreData+Recods.swift */; };
+		6E782E9626884E8400411C1F /* User+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782E9026884E8400411C1F /* User+CoreDataClass copy.swift */; };
+		6E782E9726884E8400411C1F /* Record+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782E9126884E8400411C1F /* Record+CoreDataProperties copy.swift */; };
+		6E782E9826884E8400411C1F /* Record+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782E9226884E8400411C1F /* Record+CoreDataClass copy.swift */; };
+		6E782E9926884E8400411C1F /* Person+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782E9326884E8400411C1F /* Person+CoreDataProperties copy.swift */; };
+		6E782E9A26884E8400411C1F /* Person+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782E9426884E8400411C1F /* Person+CoreDataClass copy.swift */; };
+		6E782E9B26884E8400411C1F /* User+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782E9526884E8400411C1F /* User+CoreDataProperties copy.swift */; };
+		6E782E9E268855BE00411C1F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E782E9D268855BE00411C1F /* CloudKit.framework */; };
 		6EC9D7C726836FBA00846EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC9D7C626836FBA00846EFE /* AppDelegate.swift */; };
 		6EC9D7C926836FBA00846EFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC9D7C826836FBA00846EFE /* SceneDelegate.swift */; };
 		6EC9D7CB26836FBA00846EFE /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC9D7CA26836FBA00846EFE /* LoginController.swift */; };
@@ -66,12 +67,6 @@
 		405029EED5A69BA52D49CA5F /* Pods-DailyLogsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DailyLogsTests.release.xcconfig"; path = "Target Support Files/Pods-DailyLogsTests/Pods-DailyLogsTests.release.xcconfig"; sourceTree = "<group>"; };
 		4E0A46D3C7CC66C58653EEAE /* Pods_DailyLogs_DailyLogsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyLogs_DailyLogsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E026D922686080900D68A77 /* DailyLogs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DailyLogs.xcdatamodel; sourceTree = "<group>"; };
-		6E026DA426861F1A00D68A77 /* Record+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		6E026DA526861F1A00D68A77 /* Person+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		6E026DA626861F1A00D68A77 /* Person+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		6E026DA726861F1A00D68A77 /* Record+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		6E026DA826861F1A00D68A77 /* User+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		6E026DA926861F1A00D68A77 /* User+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
 		6E026DB226861F5400D68A77 /* CoreData+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+User.swift"; sourceTree = "<group>"; };
 		6E026DB626861F8900D68A77 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		6E48C6F72683747400E464B5 /* SplashController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashController.swift; sourceTree = "<group>"; };
@@ -93,6 +88,14 @@
 		6E5D132626848449003E227B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		6E5D13282684847C003E227B /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		6E6800EE2685B4E9007DF40F /* CoreData+Recods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Recods.swift"; sourceTree = "<group>"; };
+		6E782E9026884E8400411C1F /* User+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass copy.swift"; sourceTree = "<group>"; };
+		6E782E9126884E8400411C1F /* Record+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
+		6E782E9226884E8400411C1F /* Record+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataClass copy.swift"; sourceTree = "<group>"; };
+		6E782E9326884E8400411C1F /* Person+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
+		6E782E9426884E8400411C1F /* Person+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass copy.swift"; sourceTree = "<group>"; };
+		6E782E9526884E8400411C1F /* User+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
+		6E782E9C268855BA00411C1F /* DailyLogs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyLogs.entitlements; sourceTree = "<group>"; };
+		6E782E9D268855BE00411C1F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		6EC9D7C326836FBA00846EFE /* DailyLogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyLogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EC9D7C626836FBA00846EFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EC9D7C826836FBA00846EFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3BABBC542814B4F4FEC2527 /* Pods_DailyLogs.framework in Frameworks */,
+				6E782E9E268855BE00411C1F /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +142,7 @@
 		5F9D7CDCC3EF9B1131265BE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6E782E9D268855BE00411C1F /* CloudKit.framework */,
 				99AA6C8CC2CCDDB265723520 /* Pods_DailyLogs.framework */,
 				4E0A46D3C7CC66C58653EEAE /* Pods_DailyLogs_DailyLogsUITests.framework */,
 				A08DE38C906191E062A692CF /* Pods_DailyLogsTests.framework */,
@@ -148,12 +153,12 @@
 		6E026DB126861F3200D68A77 /* CoreDataClass */ = {
 			isa = PBXGroup;
 			children = (
-				6E026DA426861F1A00D68A77 /* Record+CoreDataClass copy.swift */,
-				6E026DA526861F1A00D68A77 /* Person+CoreDataProperties copy.swift */,
-				6E026DA626861F1A00D68A77 /* Person+CoreDataClass copy.swift */,
-				6E026DA726861F1A00D68A77 /* Record+CoreDataProperties copy.swift */,
-				6E026DA826861F1A00D68A77 /* User+CoreDataClass copy.swift */,
-				6E026DA926861F1A00D68A77 /* User+CoreDataProperties copy.swift */,
+				6E782E9526884E8400411C1F /* User+CoreDataProperties copy.swift */,
+				6E782E9426884E8400411C1F /* Person+CoreDataClass copy.swift */,
+				6E782E9326884E8400411C1F /* Person+CoreDataProperties copy.swift */,
+				6E782E9226884E8400411C1F /* Record+CoreDataClass copy.swift */,
+				6E782E9126884E8400411C1F /* Record+CoreDataProperties copy.swift */,
+				6E782E9026884E8400411C1F /* User+CoreDataClass copy.swift */,
 			);
 			path = CoreDataClass;
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 		6EC9D7C526836FBA00846EFE /* DailyLogs */ = {
 			isa = PBXGroup;
 			children = (
+				6E782E9C268855BA00411C1F /* DailyLogs.entitlements */,
 				6EC9D7F92683707500846EFE /* AppDelegates */,
 				6EC9D7FC2683709200846EFE /* Controller */,
 				6EC9D7FA2683708100846EFE /* Assets */,
@@ -568,24 +574,20 @@
 				6E5D132226847A84003E227B /* UIView.swift in Sources */,
 				6E5D130A26846343003E227B /* RecordsController.swift in Sources */,
 				6EC9D7CB26836FBA00846EFE /* LoginController.swift in Sources */,
-				6E026DAA26861F1A00D68A77 /* Record+CoreDataClass copy.swift in Sources */,
 				6E026DB726861F8900D68A77 /* CoreData.swift in Sources */,
-				6E026DAB26861F1A00D68A77 /* Person+CoreDataProperties copy.swift in Sources */,
 				6E6800EF2685B4E9007DF40F /* CoreData+Recods.swift in Sources */,
 				6E5D13182684732A003E227B /* CreateRecordController.swift in Sources */,
+				6E782E9826884E8400411C1F /* Record+CoreDataClass copy.swift in Sources */,
 				6EC9D7C726836FBA00846EFE /* AppDelegate.swift in Sources */,
 				6E5D13292684847C003E227B /* DateFormatter.swift in Sources */,
-				6E026DAC26861F1A00D68A77 /* Person+CoreDataClass copy.swift in Sources */,
 				6E5D130F268465A8003E227B /* UIStoryboad.swift in Sources */,
-				6E026DAE26861F1A00D68A77 /* User+CoreDataClass copy.swift in Sources */,
 				6E026DB326861F5400D68A77 /* CoreData+User.swift in Sources */,
 				6E5D130126844AF1003E227B /* LoginViewModel.swift in Sources */,
-				6E026DAD26861F1A00D68A77 /* Record+CoreDataProperties copy.swift in Sources */,
-				6E026DAF26861F1A00D68A77 /* User+CoreDataProperties copy.swift in Sources */,
 				6EF6B31A26877D9B00834789 /* AlertMessage.swift in Sources */,
 				6E5D132726848449003E227B /* Date.swift in Sources */,
 				6EF6B31B26877D9B00834789 /* AlertTitle&Btn.swift in Sources */,
 				6EF6B31926877D9B00834789 /* Alert.swift in Sources */,
+				6E782E9A26884E8400411C1F /* Person+CoreDataClass copy.swift in Sources */,
 				6E026D932686080900D68A77 /* DailyLogs.xcdatamodeld in Sources */,
 				6E5D131B2684733A003E227B /* CreateRecordCell.swift in Sources */,
 				6E5D13202684794F003E227B /* Enums.swift in Sources */,
@@ -593,7 +595,11 @@
 				6EFBA76F26874A4000394053 /* UserData.swift in Sources */,
 				6E5D130D26846410003E227B /* RecordCell.swift in Sources */,
 				6E5D131326846730003E227B /* UIColor.swift in Sources */,
+				6E782E9726884E8400411C1F /* Record+CoreDataProperties copy.swift in Sources */,
+				6E782E9626884E8400411C1F /* User+CoreDataClass copy.swift in Sources */,
 				6E5D130526844BB3003E227B /* String.swift in Sources */,
+				6E782E9926884E8400411C1F /* Person+CoreDataProperties copy.swift in Sources */,
+				6E782E9B26884E8400411C1F /* User+CoreDataProperties copy.swift in Sources */,
 				6EF6B31D26877EDE00834789 /* AppDelegate+Ext.swift in Sources */,
 				6EC9D7C926836FBA00846EFE /* SceneDelegate.swift in Sources */,
 				6E5D131E2684791B003E227B /* RecordModel.swift in Sources */,
@@ -754,7 +760,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = DailyLogs/DailyLogs.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = D946FFLAN9;
@@ -778,7 +784,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = DailyLogs/DailyLogs.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = D946FFLAN9;

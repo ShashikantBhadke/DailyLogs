@@ -16,7 +16,6 @@ final class CreateRecordController: UIViewController {
     @IBOutlet weak var backgroundSaveButtoneView    : UIView!
     
     let disposeBag = DisposeBag()
-    let coreData = CoreData()
     var recordViewModel = CreateRecordViewModel()
     
     override func viewDidLoad() {
@@ -58,19 +57,9 @@ final class CreateRecordController: UIViewController {
     }
     
     func saveRecordModel() {
-        coreData.records.subscribe(onNext: { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        })
-        .disposed(by: disposeBag)
-        coreData.error.subscribe(onNext: { errorMessage in
-            debugPrint(errorMessage)
-        })
-        .disposed(by: disposeBag)
-        coreData.loading.subscribe(onNext: { isLoading in
-            debugPrint(isLoading)
-        })
-        .disposed(by: disposeBag)
-        coreData.saveRecord(recordObject: recordViewModel.record.value)
+        let recordDict = recordViewModel.record.value.getDictionary()
+        FirebaseHelper.saveRecord(recordDict)
+        self.navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {

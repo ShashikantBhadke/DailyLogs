@@ -16,7 +16,7 @@ final class CreateRecordCell: UITableViewCell {
     @IBOutlet weak var titleTextField           : UITextField!
     @IBOutlet weak var detailTextView           : UITextView!
     @IBOutlet weak var dateTextField            : UITextField!
-    @IBOutlet weak var personTextField          : UITextField!
+    @IBOutlet weak var categoryTextField        : UITextField!
     
     let dateObject = PublishSubject<Date>()
     let disposeBag = DisposeBag()
@@ -67,11 +67,11 @@ final class CreateRecordCell: UITableViewCell {
         let obser3 = titleTextField.rx.text.orEmpty
         let obser4 = detailTextView.rx.text.orEmpty
         let obser5 = dateTextField.rx.text.orEmpty.map {$0.getDate()}
-        let obser6 = personTextField.rx.text.orEmpty
+        let obser6 = categoryTextField.rx.text.orEmpty
         
-        let observableCombine =  Observable.combineLatest(obser1, obser2, obser3, obser4, obser5, obser6) { (amountType, amount, title, detail, date, person) -> RecordModel in
+        let observableCombine =  Observable.combineLatest(obser1, obser2, obser3, obser4, obser5, obser6) { (amountType, amount, title, detail, date, category) -> RecordModel in
             
-            let recordObj = RecordModel(amountType: amountType ?? .credited, amount: amount, title: title, date: date ?? Date(), detail: detail, person: person)
+            let recordObj = RecordModel(amountType: amountType ?? .credited, amount: amount, title: title, timeStamp: date?.timestamp ?? 0, detail: detail, category: category)
             return recordObj
         }
         return observableCombine

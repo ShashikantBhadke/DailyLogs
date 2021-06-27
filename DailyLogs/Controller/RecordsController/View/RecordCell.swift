@@ -22,7 +22,7 @@ final class RecordCell: UITableViewCell {
     func setData(_ record: RecordModel) {
         titleLabel.text = record.title
         detailsLabel.text = record.detail
-        dateLabel.text = record.date?.getString() ?? ""
+        dateLabel.text = Date(timestamp: record.timeStamp).getString() ?? ""
         
         switch record.amountType {
         case .credited:

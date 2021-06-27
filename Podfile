@@ -7,19 +7,7 @@ target 'DailyLogs' do
   pod 'RxCocoa', '6.2.0'
   
   pod 'Firebase/Auth'
-  pod 'Firebase/Analytics
   pod 'Firebase/Database'
-  
-  
-  target 'DailyLogsTests' do
-    inherit! :search_paths
-    
-    pod 'RxBlocking', '6.2.0'
-    pod 'RxTest', '6.2.0'
-  end
-  
-  target 'DailyLogsUITests' do
-  end
   
 end
 

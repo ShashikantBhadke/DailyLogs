@@ -14,9 +14,6 @@ final class RecordsController: UIViewController {
     
     @IBOutlet weak var recordsTableView     : UITableView!
     @IBOutlet weak var createRecordButton   : UIButton!
-    @IBOutlet weak var startDateTextField   : UITextField!
-    @IBOutlet weak var endDateTextField     : UITextField!
-    @IBOutlet weak var searchRecordButton   : UIButton!
     @IBOutlet weak var creditedLabel        : UILabel!
     @IBOutlet weak var debitedLabel         : UILabel!
     @IBOutlet weak var balanceLabel         : UILabel!
@@ -24,7 +21,6 @@ final class RecordsController: UIViewController {
     let startDatePicker = UIDatePicker()
     let endDatePicker = UIDatePicker()
     
-    let coreData = CoreData()
     let disposeBag = DisposeBag()
     let userObject = PublishSubject<NSManagedObject>()
     let records = BehaviorRelay<[RecordModel]>(value: [])
@@ -37,15 +33,13 @@ final class RecordsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        fetchRecords()
     }
     
     func setUpView() {
         bindView()
         setUpDates()
+        fetchRecords()
         setUpNavigation()
-        
-        searchRecordButton.setBorder(withColor: .systemIndigo, borderWidth: 1, cornerRadius: 5)
     }
     
     func setUpNavigation() {
@@ -56,12 +50,8 @@ final class RecordsController: UIViewController {
     }
     
     func setUpDates() {
-        startDateTextField.inputView = startDatePicker
-        endDateTextField.inputView = endDatePicker
         startDatePicker.date = Date().startOfMonth()
         endDatePicker.date = Date().endOfMonth()
-        startDateTextField.text = startDatePicker.date.getString() ?? ""
-        endDateTextField.text = endDatePicker.date.getString() ?? ""
         
         creditedLabel.textColor = .green
         debitedLabel.textColor = .red
@@ -91,28 +81,6 @@ final class RecordsController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        startDatePicker.rx
-            .controlEvent(.valueChanged)
-            .subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.startDateTextField.text = self.startDatePicker.date.getString() ?? ""
-        })
-        .disposed(by: disposeBag)
-        
-        endDatePicker.rx
-            .controlEvent(.valueChanged)
-            .subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.endDateTextField.text = self.endDatePicker.date.getString() ?? ""
-        })
-        .disposed(by: disposeBag)
-        
-        searchRecordButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.coreData.fetchRecords(startDate: self.startDatePicker.date as NSDate, endDate: self.endDatePicker.date as NSDate)
-        })
-        .disposed(by: disposeBag)
-        
         recordsTableView.rx.itemDeleted
             .subscribe(onNext: { [weak self] indexPath in
                 self?.deleteRecord(indexPath.row)
@@ -130,26 +98,22 @@ final class RecordsController: UIViewController {
     }
     
     func fetchRecords() {
-        coreData.records.subscribe(onNext: { [weak self] records in
-            self?.records.accept(records)
-        })
-        .disposed(by: disposeBag)
-        coreData.error.subscribe(onNext: { errorMessage in
-            debugPrint(errorMessage)
-        })
-        .disposed(by: disposeBag)
-        coreData.loading.subscribe(onNext: { isLoading in
-            debugPrint(isLoading)
-        })
-        .disposed(by: disposeBag)
-        coreData.fetchRecords(startDate: startDatePicker.date as NSDate, endDate: endDatePicker.date as NSDate)
+        FirebaseHelper.observeNewAddedRecord()
+        FirebaseHelper.newRecord
+            .subscribe(onNext: { [weak self] record in
+                guard let self = self else { return }
+                var arrRecords = self.records.value
+                arrRecords.append(record)
+                self.records.accept(arrRecords)
+            })
+            .disposed(by: disposeBag)
     }
     
     func deleteRecord(_ indexPathRow: Int) {
         let recordToDelete = self.records.value[indexPathRow]
         var array = self.records.value
         array.remove(at: indexPathRow)
-        self.coreData.deleteRecord(recordToDelete)
+        FirebaseHelper.deleteRecord(id: recordToDelete.id)
         self.records.accept(array)
     }
     

@@ -10,7 +10,7 @@ import Foundation
 extension Date {
     
     init(timestamp:Int64) {
-        self = Date(timeIntervalSince1970: TimeInterval(timestamp / 1000))
+        self = Date(timeIntervalSince1970: TimeInterval(timestamp))
     }
     
     var timestamp:Int64 {

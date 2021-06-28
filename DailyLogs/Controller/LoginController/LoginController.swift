@@ -26,7 +26,6 @@ final class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        bindView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +44,15 @@ final class LoginController: UIViewController {
             mailTextField.text = UserData.returnValue(.mail) as? String ?? ""
             passwordTextField.text = UserData.returnValue(.password) as? String ?? ""
         }
+        
+        if Auth.auth().currentUser != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                guard let self = self else { return }
+                self.pushRecordsController()
+            }
+            return
+        }
+        bindView()
     }
     
     func bindView() {

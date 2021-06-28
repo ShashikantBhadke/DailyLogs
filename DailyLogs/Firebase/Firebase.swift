@@ -12,36 +12,15 @@ import FirebaseDatabase
 final class FirebaseHelper {
     
     static var dataBaseRef: DatabaseReference!
+    
     static var newRecord = PublishSubject<RecordModel>()
+    static var deletedRecord = PublishSubject<RecordModel>()
+    
+    static var categoryListing = PublishSubject<[CategoryModel]>()
     
     static func initialSetUp() {
         Database.database().isPersistenceEnabled = true
         FirebaseHelper.dataBaseRef = Database.database().reference()
-    }
-    
-    // Records
-    static func observeNewAddedRecord() {
-        dataBaseRef.child(DatabaseTable.records.rawValue)
-            .observe(.childAdded, with: { snapshot in
-                if var dictionary = snapshot.value as? [String: Any] {
-                    dictionary["id"] = snapshot.key
-                    if let recordObject = RecordModel.getObject(dictionary: dictionary) {
-                        newRecord.onNext(recordObject)
-                    }
-                }
-            })
-    }
-    
-    static func deleteRecord(id: String) {
-        dataBaseRef.child(DatabaseTable.records.rawValue)
-            .child(id)
-            .removeValue()
-    }
-    
-    static func saveRecord(_ object: [String:Any]) {
-        dataBaseRef.child(DatabaseTable.records.rawValue)
-            .childByAutoId()
-            .setValue(object)
     }
     
 }

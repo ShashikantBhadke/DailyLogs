@@ -29,6 +29,12 @@
 		6E782EC326885C9800411C1F /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782EC226885C9800411C1F /* Firebase.swift */; };
 		6E782EC526885F3D00411C1F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E782EC426885F3D00411C1F /* GoogleService-Info.plist */; };
 		6E782EC72688682900411C1F /* Firebase+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782EC62688682900411C1F /* Firebase+Keys.swift */; };
+		6E782ECC2688908700411C1F /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782ECB2688908700411C1F /* FilterController.swift */; };
+		6E782ECF2688931200411C1F /* CategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782ECE2688931200411C1F /* CategoryController.swift */; };
+		6E782ED22688933900411C1F /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782ED12688933900411C1F /* CategoryModel.swift */; };
+		6E782ED42688940200411C1F /* Firebase+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782ED32688940200411C1F /* Firebase+Record.swift */; };
+		6E782ED62688941000411C1F /* Firebase+Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782ED52688941000411C1F /* Firebase+Category.swift */; };
+		6E782ED926889E1E00411C1F /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782ED826889E1E00411C1F /* CategoryCell.swift */; };
 		6EC9D7C726836FBA00846EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC9D7C626836FBA00846EFE /* AppDelegate.swift */; };
 		6EC9D7C926836FBA00846EFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC9D7C826836FBA00846EFE /* SceneDelegate.swift */; };
 		6EC9D7CB26836FBA00846EFE /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC9D7CA26836FBA00846EFE /* LoginController.swift */; };
@@ -79,6 +85,12 @@
 		6E782EC226885C9800411C1F /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		6E782EC426885F3D00411C1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6E782EC62688682900411C1F /* Firebase+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Keys.swift"; sourceTree = "<group>"; };
+		6E782ECB2688908700411C1F /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
+		6E782ECE2688931200411C1F /* CategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryController.swift; sourceTree = "<group>"; };
+		6E782ED12688933900411C1F /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		6E782ED32688940200411C1F /* Firebase+Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Record.swift"; sourceTree = "<group>"; };
+		6E782ED52688941000411C1F /* Firebase+Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Category.swift"; sourceTree = "<group>"; };
+		6E782ED826889E1E00411C1F /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		6EC9D7C326836FBA00846EFE /* DailyLogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyLogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EC9D7C626836FBA00846EFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EC9D7C826836FBA00846EFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +236,40 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		6E782ECA26888E9100411C1F /* FilterController */ = {
+			isa = PBXGroup;
+			children = (
+				6E782ECB2688908700411C1F /* FilterController.swift */,
+			);
+			path = FilterController;
+			sourceTree = "<group>";
+		};
+		6E782ECD268892FF00411C1F /* CategoryController */ = {
+			isa = PBXGroup;
+			children = (
+				6E782ECE2688931200411C1F /* CategoryController.swift */,
+				6E782ED726889DEE00411C1F /* View */,
+				6E782ED02688932E00411C1F /* Model */,
+			);
+			path = CategoryController;
+			sourceTree = "<group>";
+		};
+		6E782ED02688932E00411C1F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6E782ED12688933900411C1F /* CategoryModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6E782ED726889DEE00411C1F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6E782ED826889E1E00411C1F /* CategoryCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		6EC9D7BA26836FBA00846EFE = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +339,8 @@
 			children = (
 				6E782EC426885F3D00411C1F /* GoogleService-Info.plist */,
 				6E782EC226885C9800411C1F /* Firebase.swift */,
+				6E782ED52688941000411C1F /* Firebase+Category.swift */,
+				6E782ED32688940200411C1F /* Firebase+Record.swift */,
 				6E782EC62688682900411C1F /* Firebase+Keys.swift */,
 			);
 			path = Firebase;
@@ -305,6 +353,8 @@
 				6E5D12FE26844AD4003E227B /* LoginController */,
 				6E5D130826846329003E227B /* RecordsController */,
 				6E5D1316268472BB003E227B /* CreateRecordController */,
+				6E782ECA26888E9100411C1F /* FilterController */,
+				6E782ECD268892FF00411C1F /* CategoryController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -501,6 +551,7 @@
 				6EC9D7C726836FBA00846EFE /* AppDelegate.swift in Sources */,
 				6E5D13292684847C003E227B /* DateFormatter.swift in Sources */,
 				6E5D130F268465A8003E227B /* UIStoryboad.swift in Sources */,
+				6E782ED42688940200411C1F /* Firebase+Record.swift in Sources */,
 				6E5D130126844AF1003E227B /* LoginViewModel.swift in Sources */,
 				6EF6B31A26877D9B00834789 /* AlertMessage.swift in Sources */,
 				6E5D132726848449003E227B /* Date.swift in Sources */,
@@ -509,16 +560,21 @@
 				6E5D131B2684733A003E227B /* CreateRecordCell.swift in Sources */,
 				6E5D13202684794F003E227B /* Enums.swift in Sources */,
 				6E5D132526847BAC003E227B /* CreateRecordViewModel.swift in Sources */,
+				6E782ECC2688908700411C1F /* FilterController.swift in Sources */,
 				6EFBA76F26874A4000394053 /* UserData.swift in Sources */,
+				6E782ED62688941000411C1F /* Firebase+Category.swift in Sources */,
 				6E5D130D26846410003E227B /* RecordCell.swift in Sources */,
 				6E5D131326846730003E227B /* UIColor.swift in Sources */,
 				6E782EC326885C9800411C1F /* Firebase.swift in Sources */,
 				6E5D130526844BB3003E227B /* String.swift in Sources */,
 				6EF6B31D26877EDE00834789 /* AppDelegate+Ext.swift in Sources */,
+				6E782ED926889E1E00411C1F /* CategoryCell.swift in Sources */,
 				6EC9D7C926836FBA00846EFE /* SceneDelegate.swift in Sources */,
 				6E5D131E2684791B003E227B /* RecordModel.swift in Sources */,
 				6E48C6F82683747400E464B5 /* SplashController.swift in Sources */,
+				6E782ED22688933900411C1F /* CategoryModel.swift in Sources */,
 				6E782EC72688682900411C1F /* Firebase+Keys.swift in Sources */,
+				6E782ECF2688931200411C1F /* CategoryController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +734,7 @@
 				CODE_SIGN_ENTITLEMENTS = DailyLogs/DailyLogs.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = D946FFLAN9;
 				INFOPLIST_FILE = DailyLogs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -702,6 +759,7 @@
 				CODE_SIGN_ENTITLEMENTS = DailyLogs/DailyLogs.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = D946FFLAN9;
 				INFOPLIST_FILE = DailyLogs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

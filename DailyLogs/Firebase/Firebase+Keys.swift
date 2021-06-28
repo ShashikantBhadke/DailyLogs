@@ -11,6 +11,7 @@ extension FirebaseHelper {
     
     enum DatabaseTable: String {
         case records = "RecordTable"
+        case category = "Category"
     }
     
 }

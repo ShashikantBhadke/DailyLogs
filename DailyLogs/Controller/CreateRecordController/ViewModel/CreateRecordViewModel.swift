@@ -22,6 +22,9 @@ final class CreateRecordViewModel {
             if recordObject.title.isEmpty {
                 return false
             }
+            if recordObject.category.isEmpty {
+                return false
+            }
             return true
         }
     }

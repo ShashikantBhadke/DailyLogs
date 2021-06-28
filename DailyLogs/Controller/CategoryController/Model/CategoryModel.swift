@@ -1,24 +1,17 @@
 //
-//  RecordModel.swift
+//  CategoryModel.swift
 //  DailyLogs
 //
-//  Created by Shashikant Bhadke on 24/06/21.
+//  Created by Shashikant Bhadke on 27/06/21.
 //
 
 import Foundation
 
-struct RecordModel: Codable, Equatable {
-    var id: String = ""
-    var amountType: AmountType
-    var amount: Double = 0
-    var title: String = ""
-    var timeStamp: Int64 = Date().timestamp
-    var detail: String?
-    var category: String = ""
+struct CategoryModel: Codable, Equatable {
     
-    static func getDummy() -> RecordModel {
-        return RecordModel(amountType: .unknown)
-    }
+    var id: String
+    var name: String
+    var icon: String
     
     func getDictionary()-> [String:Any] {
         do {
@@ -30,16 +23,16 @@ struct RecordModel: Codable, Equatable {
         return [:]
     }
     
-    static func getObject(data: Data) -> RecordModel? {
+    static func getObject(data: Data) -> CategoryModel? {
         do {
-            return try JSONDecoder().decode(RecordModel.self, from: data)
+            return try JSONDecoder().decode(CategoryModel.self, from: data)
         } catch {
             debugPrint(error.localizedDescription)
         }
         return nil
     }
     
-    static func getObject(dictionary: [String:Any]) -> RecordModel? {
+    static func getObject(dictionary: [String:Any]) -> CategoryModel? {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
             return getObject(data: jsonData)
@@ -49,4 +42,7 @@ struct RecordModel: Codable, Equatable {
         return nil
     }
     
+    static func == (lhs: CategoryModel, rhs: CategoryModel) -> Bool {
+        return lhs.name == rhs.name
+    }
 }

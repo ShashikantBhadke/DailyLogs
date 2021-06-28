@@ -18,32 +18,53 @@ final class CreateRecordCell: UITableViewCell {
     @IBOutlet weak var dateTextField            : UITextField!
     @IBOutlet weak var categoryTextField        : UITextField!
     
-    let dateObject = PublishSubject<Date>()
-    let disposeBag = DisposeBag()
+    let categorySubject = PublishSubject<Void>()
+    var categoryObserver: Observable<Void> {
+        return categorySubject.asObservable()
+    }
+    
+    var disposeBag = DisposeBag()
     let datePicker = UIDatePicker()
+    let recordObject = BehaviorRelay<RecordModel>(value: RecordModel.getDummy())
     
     override func awakeFromNib() {
         setUpView()
+        bindView()
+        bindableFields()
+    }
+    
+    func setDisposeBag() {
+        disposeBag = DisposeBag()
+        setUpView()
+        bindView()
+        bindableFields()
     }
     
     private func setUpView() {
-        bindView()
         detailTextView.setBorder(withColor: .border, borderWidth: 1, cornerRadius: 10)
-        dateObject.onNext(Date())
         dateTextField.inputView = datePicker
-        datePicker.rx.controlEvent(.valueChanged)
+        categoryTextField.rx.controlEvent(.editingDidBegin)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.dateObject.onNext(self.datePicker.date)
+                self?.categorySubject.onNext(())
             })
             .disposed(by: disposeBag)
     }
     
     private func bindView() {
-        dateObject.subscribe(onNext: { [weak self] date in
+        datePicker.rx.controlEvent(.valueChanged)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                var record = self.recordObject.value
+                record.timeStamp = self.datePicker.date.timestamp
+                self.recordObject.accept(record)
+            })
+            .disposed(by: disposeBag)
+        
+        recordObject.subscribe(onNext: { [weak self] record in
             guard let self = self else { return }
-            self.dateTextField.text = date.getString() ?? ""
-        }).disposed(by: disposeBag)
+            self.setUpData(record)
+        })
+        .disposed(by: disposeBag)
         
         amountTextField.rx.text
             .map {
@@ -61,7 +82,7 @@ final class CreateRecordCell: UITableViewCell {
         }).disposed(by: disposeBag)
     }
     
-    func bindableView() -> Observable<RecordModel> {
+    private func bindableFields() {
         let obser1 = amountTypeSegmentControl.rx.selectedSegmentIndex.map {AmountType(rawValue: $0)}
         let obser2 = amountTextField.rx.text.map {Double($0 ?? "0.0") ?? 0}
         let obser3 = titleTextField.rx.text.orEmpty
@@ -74,7 +95,20 @@ final class CreateRecordCell: UITableViewCell {
             let recordObj = RecordModel(amountType: amountType ?? .credited, amount: amount, title: title, timeStamp: date?.timestamp ?? 0, detail: detail, category: category)
             return recordObj
         }
-        return observableCombine
         
+        observableCombine.subscribe(onNext: { [weak self] record in
+            guard let self = self else { return }
+            self.recordObject.accept(record)
+        })
+        .disposed(by: disposeBag)
     }
+
+    private func setUpData(_ recordObj: RecordModel) {
+        amountTextField.text = "\(recordObj.amount)"
+        titleTextField.text = recordObj.title
+        detailTextView.text = recordObj.detail
+        dateTextField.text = Date(timestamp: recordObj.timeStamp).getString()
+        categoryTextField.text = recordObj.category
+    }
+    
 }

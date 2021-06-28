@@ -18,9 +18,6 @@ final class RecordsController: UIViewController {
     @IBOutlet weak var debitedLabel         : UILabel!
     @IBOutlet weak var balanceLabel         : UILabel!
         
-    let startDatePicker = UIDatePicker()
-    let endDatePicker = UIDatePicker()
-    
     let disposeBag = DisposeBag()
     let userObject = PublishSubject<NSManagedObject>()
     let records = BehaviorRelay<[RecordModel]>(value: [])
@@ -37,8 +34,7 @@ final class RecordsController: UIViewController {
     
     func setUpView() {
         bindView()
-        setUpDates()
-        fetchRecords()
+        firebaseMethodsForRecords()
         setUpNavigation()
     }
     
@@ -47,14 +43,6 @@ final class RecordsController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .automatic
         self.navigationController?.navigationBar.sizeToFit()
-    }
-    
-    func setUpDates() {
-        startDatePicker.date = Date().startOfMonth()
-        endDatePicker.date = Date().endOfMonth()
-        
-        creditedLabel.textColor = .green
-        debitedLabel.textColor = .red
     }
     
     func bindView() {
@@ -97,13 +85,23 @@ final class RecordsController: UIViewController {
         self.navigationController?.pushViewController(createRecordController, animated: true)
     }
     
-    func fetchRecords() {
+    func firebaseMethodsForRecords() {
         FirebaseHelper.observeNewAddedRecord()
+        FirebaseHelper.observeRemoveRecord()
         FirebaseHelper.newRecord
             .subscribe(onNext: { [weak self] record in
                 guard let self = self else { return }
                 var arrRecords = self.records.value
                 arrRecords.append(record)
+                self.records.accept(arrRecords)
+            })
+            .disposed(by: disposeBag)
+        
+        FirebaseHelper.deletedRecord
+            .subscribe(onNext: {[weak self] record in
+                guard let self = self else { return }
+                var arrRecords = self.records.value
+                arrRecords = arrRecords.filter {$0 != record}
                 self.records.accept(arrRecords)
             })
             .disposed(by: disposeBag)

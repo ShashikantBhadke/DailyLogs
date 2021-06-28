@@ -35,4 +35,11 @@ final class SplashController: UIViewController {
         self.navigationController?.setViewControllers([loginController], animated: true)
     }
     
+    override func didReceiveMemoryWarning() {
+        debugPrint("Receive Memory Warning For", #file)
+    }
+    
+    deinit {
+        debugPrint("File Deinit", #file)
+    }
 }

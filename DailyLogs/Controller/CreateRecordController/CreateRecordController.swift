@@ -52,14 +52,51 @@ final class CreateRecordController: UIViewController {
         saveRecordButton.rx.controlEvent(.touchUpInside)
             .subscribe(onNext: { [weak self]_ in
                 guard let self = self else { return }
+                self.view.endEditing(true)
                 self.saveRecordModel()
             }).disposed(by: disposeBag)
+        
+//        recordViewModel.record
+//            .map {[$0]}
+//            .bind(to: recordsTableView.rx.items(cellIdentifier: String(describing: CreateRecordCell.self), cellType: CreateRecordCell.self)) { [weak self] (_, record, cell) in
+//                guard let self = self else { return }
+//                cell.recordObject.bind(to: self.recordViewModel.record)
+//                    .disposed(by: self.disposeBag)
+//                self.recordViewModel.record.bind(to: cell.recordObject)
+//                    .disposed(by: cell.disposeBag)
+//                cell.categoryObserver?
+//                    .subscribe(onNext: { [weak self] _ in
+//                        guard let self = self else { return }
+//                        print("cell.categoryObserver.subscribe")
+//                        self.pushCategoryController()
+//                    }, onDisposed: {
+//                        print("---disposed---")
+//                    })
+//                    .disposed(by: self.disposeBag)
+//            }
+//            .disposed(by: disposeBag)
     }
     
     func saveRecordModel() {
         let recordDict = recordViewModel.record.value.getDictionary()
         FirebaseHelper.saveRecord(recordDict)
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func pushCategoryController() {
+        guard let categoryController = UIStoryboard.records.instantiateViewController(withIdentifier: String(describing: CategoryController.self)) as? CategoryController else { return }
+        categoryController.observable
+            .subscribe(onNext: { [weak self] category in
+                guard let self = self else { return }
+                var record = self.recordViewModel.record.value
+                record.category = category.name
+                self.recordViewModel.record.accept(record)
+                self.recordsTableView.reloadData()
+            }, onDisposed: {
+                debugPrint("dispose- pushCategoryController")
+            })
+            .disposed(by: categoryController.disposeBag)
+        self.navigationController?.pushViewController(categoryController, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,18 +110,24 @@ final class CreateRecordController: UIViewController {
 }
 
 extension CreateRecordController: UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CreateRecordCell.self), for: indexPath) as? CreateRecordCell else { return CreateRecordCell() }
-        
-        cell.bindableView()
+        cell.setDisposeBag()
+        cell.recordObject.accept(recordViewModel.record.value)
+        cell.recordObject
             .bind(to: recordViewModel.record)
-            .disposed(by: disposeBag)
-        
+            .disposed(by: cell.disposeBag)
+        cell.categoryObserver
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.pushCategoryController()
+            })
+            .disposed(by: cell.disposeBag)
         return cell
     }
 }

@@ -16,7 +16,7 @@ final class FirebaseHelper {
     static var newRecord = PublishSubject<RecordModel>()
     static var deletedRecord = PublishSubject<RecordModel>()
     
-    static var categoryListing = PublishSubject<[CategoryModel]>()
+    static var category = PublishSubject<CategoryModel>()
     
     static func initialSetUp() {
         Database.database().isPersistenceEnabled = true

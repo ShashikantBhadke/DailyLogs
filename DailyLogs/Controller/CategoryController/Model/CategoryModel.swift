@@ -8,10 +8,7 @@
 import Foundation
 
 struct CategoryModel: Codable, Equatable {
-    
-    var id: String
     var name: String
-    var icon: String
     
     func getDictionary()-> [String:Any] {
         do {
@@ -40,9 +37,5 @@ struct CategoryModel: Codable, Equatable {
             debugPrint(error.localizedDescription)
         }
         return nil
-    }
-    
-    static func == (lhs: CategoryModel, rhs: CategoryModel) -> Bool {
-        return lhs.name == rhs.name
     }
 }

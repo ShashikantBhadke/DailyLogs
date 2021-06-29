@@ -10,7 +10,7 @@ import Foundation
 struct RecordModel: Codable, Equatable {
     var id: String = ""
     var amountType: AmountType
-    var amount: Double = 0
+    var amount = ""
     var title: String = ""
     var timeStamp: Int64 = Date().timestamp
     var detail: String?

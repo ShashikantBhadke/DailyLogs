@@ -11,8 +11,9 @@ import RxCocoa
 
 final class CategoryController: UIViewController {
     
-    @IBOutlet private weak var categorySearchBar: UISearchBar!
-    @IBOutlet private weak var categoryTableView: UITableView!
+    @IBOutlet private weak var categoryTableView    : UITableView!
+    @IBOutlet private weak var newCategoryTextField : UITextField!
+    @IBOutlet private weak var addNewCategoryButton : UIButton!
     
     let disposeBag = DisposeBag()
     var observable: Observable<CategoryModel> {
@@ -27,13 +28,16 @@ final class CategoryController: UIViewController {
     
     private func setUpView() {
         self.title = "Select Category"
+        bindView()
         setUpData()
     }
     
     private func setUpData() {
-        FirebaseHelper.categoryListing.subscribe(onNext: { [weak self] array in
+        FirebaseHelper.category.subscribe(onNext: { [weak self] category in
             guard let self = self else { return }
-            self.removeRepeatedRecord(array)
+            var newArray = self.categorys.value
+            newArray.append(category)
+            self.categorys.accept(newArray)
         })
         .disposed(by: disposeBag)
         FirebaseHelper.observeNewCategory()
@@ -50,21 +54,11 @@ final class CategoryController: UIViewController {
         }
         newArray = newArray.sorted { $0.name < $1.name }
         categorys.accept(newArray)
-        bindView()
+        
     }
     
     private func bindView() {
-        categoryTableView.delegate = nil
-        categoryTableView.dataSource = nil
-        categorySearchBar.rx.text
-            .orEmpty
-            .throttle(.microseconds(300), latest: true, scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .map { [weak self] search in
-                (self?.categorys.value ?? []).filter { category in
-                    search.isEmpty || category.name.hasPrefix(search)
-                }
-            }
+        categorys
             .bind(to: categoryTableView.rx.items(cellIdentifier: String(describing: CategoryCell.self), cellType: CategoryCell.self)) { (_, model, cell) in
                 cell.categoryLabel.text = model.name
             }
@@ -77,6 +71,16 @@ final class CategoryController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
+        
+        addNewCategoryButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            guard let self = self,
+                  let newCategory = self.newCategoryTextField.text,
+                  !newCategory.isEmpty else { return }
+            self.newCategoryTextField.text = ""
+            self.newCategoryTextField.resignFirstResponder()
+            FirebaseHelper.saveOrUpdateCategory(CategoryModel(name: newCategory).getDictionary())
+        })
+        .disposed(by: disposeBag)
     }
     
     override func didReceiveMemoryWarning() {

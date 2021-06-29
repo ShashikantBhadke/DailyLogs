@@ -14,31 +14,25 @@ extension FirebaseHelper {
     // Records
     static func observeNewCategory() {
         dataBaseRef.child(DatabaseTable.category.rawValue)
-            .observeSingleEvent(of: .value) { snapshot in
+            .observe(.childAdded) { snapshot in
                 if let dictionary = snapshot.value as? [String: Any] {
-                    var arrCategory = [CategoryModel]()
-                    for (id, value) in dictionary {
-                        guard var categoryDict = value as? [String: Any] else { return }
-                        categoryDict["id"] = id
-                        if let object = CategoryModel.getObject(dictionary: categoryDict) {
-                            arrCategory.append(object)
-                        }
+                    if let object = CategoryModel.getObject(dictionary: dictionary) {
+                        category.onNext(object)
                     }
-                    categoryListing.onNext(arrCategory)
                 }
             }
     }
     
     static func observeRemoveCategory() {
         dataBaseRef.child(DatabaseTable.category.rawValue)
-            .observe(.childRemoved, with: { snapshot in
+            .observe(.childRemoved) { snapshot in
                 if var dictionary = snapshot.value as? [String: Any] {
                     dictionary["id"] = snapshot.key
                     if let recordObject = RecordModel.getObject(dictionary: dictionary) {
                         deletedRecord.onNext(recordObject)
                     }
                 }
-            })
+            }
     }
     
     static func deleteCategory(id: String) {

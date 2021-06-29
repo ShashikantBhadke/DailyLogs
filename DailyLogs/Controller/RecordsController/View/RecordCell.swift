@@ -21,7 +21,7 @@ final class RecordCell: UITableViewCell {
     
     func setData(_ record: RecordModel) {
         titleLabel.text = record.title
-        detailsLabel.text = record.detail
+        detailsLabel.text = record.category + "\n" + (record.detail ?? "")
         dateLabel.text = Date(timestamp: record.timeStamp).getString() ?? ""
         
         switch record.amountType {

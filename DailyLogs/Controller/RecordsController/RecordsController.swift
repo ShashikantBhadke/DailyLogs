@@ -58,12 +58,12 @@ final class RecordsController: UIViewController {
                 let creditedAmount = self.records.value
                     .filter { $0.amountType == .credited }
                     .reduce(0) {
-                        return $0 + $1.amount
+                        return $0 + (Double($1.amount) ?? 0)
                     }
                 let debitedAmount = self.records.value
                     .filter { $0.amountType == .debited }
                     .reduce(0) {
-                        return $0 + $1.amount
+                        return $0 + (Double($1.amount) ?? 0)
                     }
                 self.setAmount(credited: creditedAmount, debited: debitedAmount)
             })
@@ -93,6 +93,7 @@ final class RecordsController: UIViewController {
                 guard let self = self else { return }
                 var arrRecords = self.records.value
                 arrRecords.append(record)
+                arrRecords = arrRecords.sorted {$0.timeStamp > $1.timeStamp}
                 self.records.accept(arrRecords)
             })
             .disposed(by: disposeBag)

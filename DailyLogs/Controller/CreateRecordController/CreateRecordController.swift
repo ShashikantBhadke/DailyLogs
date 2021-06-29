@@ -45,6 +45,7 @@ final class CreateRecordController: UIViewController {
         recordViewModel.isValid()
             .bind(to: saveRecordButton.rx.isEnabled)
             .disposed(by: disposeBag)
+        
         recordViewModel.isValid().map {$0 ? 1 : 0.2}
             .bind(to: backgroundSaveButtoneView.rx.alpha)
             .disposed(by: disposeBag)
@@ -56,25 +57,6 @@ final class CreateRecordController: UIViewController {
                 self.saveRecordModel()
             }).disposed(by: disposeBag)
         
-//        recordViewModel.record
-//            .map {[$0]}
-//            .bind(to: recordsTableView.rx.items(cellIdentifier: String(describing: CreateRecordCell.self), cellType: CreateRecordCell.self)) { [weak self] (_, record, cell) in
-//                guard let self = self else { return }
-//                cell.recordObject.bind(to: self.recordViewModel.record)
-//                    .disposed(by: self.disposeBag)
-//                self.recordViewModel.record.bind(to: cell.recordObject)
-//                    .disposed(by: cell.disposeBag)
-//                cell.categoryObserver?
-//                    .subscribe(onNext: { [weak self] _ in
-//                        guard let self = self else { return }
-//                        print("cell.categoryObserver.subscribe")
-//                        self.pushCategoryController()
-//                    }, onDisposed: {
-//                        print("---disposed---")
-//                    })
-//                    .disposed(by: self.disposeBag)
-//            }
-//            .disposed(by: disposeBag)
     }
     
     func saveRecordModel() {
@@ -84,6 +66,7 @@ final class CreateRecordController: UIViewController {
     }
     
     func pushCategoryController() {
+        self.view.endEditing(true)
         guard let categoryController = UIStoryboard.records.instantiateViewController(withIdentifier: String(describing: CategoryController.self)) as? CategoryController else { return }
         categoryController.observable
             .subscribe(onNext: { [weak self] category in
@@ -110,24 +93,27 @@ final class CreateRecordController: UIViewController {
 }
 
 extension CreateRecordController: UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CreateRecordCell.self), for: indexPath) as? CreateRecordCell else { return CreateRecordCell() }
-        cell.setDisposeBag()
-        cell.recordObject.accept(recordViewModel.record.value)
-        cell.recordObject
-            .bind(to: recordViewModel.record)
-            .disposed(by: cell.disposeBag)
-        cell.categoryObserver
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.pushCategoryController()
-            })
-            .disposed(by: cell.disposeBag)
+        cell.setUpData(recordViewModel.record.value)
+        cell.onRecordUpdate = {  [weak self] record in
+            guard let self = self else { return }
+            self.recordViewModel.record.accept(record)
+        }
+        cell.onCategoryType = { [weak self] in
+            guard let self = self else { return }
+            if cell.categoryTextField != nil {
+                cell.categoryTextField.resignFirstResponder()
+            }
+            self.view.endEditing(true)
+            self.pushCategoryController()
+        }
+        
         return cell
     }
 }

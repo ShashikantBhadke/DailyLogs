@@ -21,15 +21,39 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="BG8-no-FVX">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
-                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="q9F-gL-XOc">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjp-00-OnD">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add New Category" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nzz-7l-XdK">
+                                                <rect key="frame" x="20" y="10" width="324" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="45" id="Qaj-SE-UJT"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fxk-QY-FLH">
+                                                <rect key="frame" x="354" y="10" width="45" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="45" id="brO-Re-eQa"/>
+                                                    <constraint firstAttribute="width" constant="45" id="dmP-rX-kf4"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                <state key="normal" title="+"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" name="customBackground"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="yDV-77-0ay"/>
+                                            <constraint firstItem="Nzz-7l-XdK" firstAttribute="leading" secondItem="kjp-00-OnD" secondAttribute="leading" constant="20" id="0ID-P5-QFN"/>
+                                            <constraint firstAttribute="trailing" secondItem="fxk-QY-FLH" secondAttribute="trailing" constant="15" id="CeY-dv-sZq"/>
+                                            <constraint firstItem="Nzz-7l-XdK" firstAttribute="centerY" secondItem="kjp-00-OnD" secondAttribute="centerY" id="QH6-Cp-LGp"/>
+                                            <constraint firstAttribute="bottom" secondItem="fxk-QY-FLH" secondAttribute="bottom" constant="10" id="mXy-6K-gBQ"/>
+                                            <constraint firstItem="fxk-QY-FLH" firstAttribute="top" secondItem="kjp-00-OnD" secondAttribute="top" constant="10" id="wJ7-CE-d6c"/>
+                                            <constraint firstItem="fxk-QY-FLH" firstAttribute="leading" secondItem="Nzz-7l-XdK" secondAttribute="trailing" constant="10" id="yUB-Fc-Ipg"/>
                                         </constraints>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </searchBar>
+                                    </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="X9I-eY-iEw">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="768"/>
+                                        <rect key="frame" x="0.0" y="70" width="414" height="748"/>
                                         <color key="backgroundColor" name="customBackground"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" rowHeight="86" id="nwf-uW-2H8" customClass="CategoryCell" customModule="DailyLogs" customModuleProvider="target">
@@ -86,8 +110,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="categorySearchBar" destination="q9F-gL-XOc" id="vmS-PE-Eg5"/>
+                        <outlet property="addNewCategoryButton" destination="fxk-QY-FLH" id="Wtf-Nh-jYm"/>
                         <outlet property="categoryTableView" destination="X9I-eY-iEw" id="q3S-fk-3ev"/>
+                        <outlet property="newCategoryTextField" destination="Nzz-7l-XdK" id="Uh4-1M-lHv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pSZ-MF-Wgg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -485,7 +510,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EoG-pp-4fq"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="EoG-pp-4fq" firstAttribute="trailing" secondItem="ZFX-sc-IF2" secondAttribute="trailing" id="2Is-kh-hA2"/>
                             <constraint firstItem="Ipk-Eg-M5f" firstAttribute="leading" secondItem="EoG-pp-4fq" secondAttribute="leading" id="3nT-zs-cOb"/>

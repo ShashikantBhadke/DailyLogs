@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E07B574268B2671002C1843 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E07B573268B2671002C1843 /* Launch Screen.storyboard */; };
 		6E48C6F82683747400E464B5 /* SplashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E48C6F72683747400E464B5 /* SplashController.swift */; };
 		6E5D130126844AF1003E227B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D130026844AF1003E227B /* LoginViewModel.swift */; };
 		6E5D130526844BB3003E227B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D130426844BB3003E227B /* String.swift */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		11FAC8D6E49CEBCC3638AA11 /* Pods-DailyLogs-DailyLogsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DailyLogs-DailyLogsUITests.debug.xcconfig"; path = "Target Support Files/Pods-DailyLogs-DailyLogsUITests/Pods-DailyLogs-DailyLogsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4E0A46D3C7CC66C58653EEAE /* Pods_DailyLogs_DailyLogsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyLogs_DailyLogsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E07B573268B2671002C1843 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6E48C6F72683747400E464B5 /* SplashController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashController.swift; sourceTree = "<group>"; };
 		6E5D130026844AF1003E227B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		6E5D130426844BB3003E227B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -142,6 +144,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6E2CAEA9268B0CFD008EF154 /* SplashController */ = {
+			isa = PBXGroup;
+			children = (
+				6E48C6F72683747400E464B5 /* SplashController.swift */,
+			);
+			path = SplashController;
+			sourceTree = "<group>";
+		};
 		6E5D12FE26844AD4003E227B /* LoginController */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,10 +172,10 @@
 		6E5D130226844B9E003E227B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				6E5D130326844BA5003E227B /* Extension */,
 				6E5D131F2684794F003E227B /* Enums.swift */,
 				6EFBA76E26874A4000394053 /* UserData.swift */,
 				6EF6B31526877D9B00834789 /* Alert */,
+				6E5D130326844BA5003E227B /* Extension */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -330,6 +340,7 @@
 				6E5D1310268465FB003E227B /* Records.storyboard */,
 				6EC9D7D226836FBD00846EFE /* Assets.xcassets */,
 				6E5D131426846775003E227B /* Color.xcassets */,
+				6E07B573268B2671002C1843 /* Launch Screen.storyboard */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -349,7 +360,7 @@
 		6EC9D7FC2683709200846EFE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6E48C6F72683747400E464B5 /* SplashController.swift */,
+				6E2CAEA9268B0CFD008EF154 /* SplashController */,
 				6E5D12FE26844AD4003E227B /* LoginController */,
 				6E5D130826846329003E227B /* RecordsController */,
 				6E5D1316268472BB003E227B /* CreateRecordController */,
@@ -463,6 +474,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E07B574268B2671002C1843 /* Launch Screen.storyboard in Resources */,
 				6EC9D7D326836FBD00846EFE /* Assets.xcassets in Resources */,
 				6E5D131526846775003E227B /* Color.xcassets in Resources */,
 				6E782EC526885F3D00411C1F /* GoogleService-Info.plist in Resources */,

@@ -13,7 +13,7 @@ extension FirebaseHelper {
     
     // Records
     static func observeNewAddedRecord() {
-        dataBaseRef.child(DatabaseTable.records.rawValue)
+        FirebaseHelper.getRecordReference()
             .observe(.childAdded, with: { snapshot in
                 if var dictionary = snapshot.value as? [String: Any] {
                     dictionary["id"] = snapshot.key
@@ -25,7 +25,7 @@ extension FirebaseHelper {
     }
     
     static func observeRemoveRecord() {
-        dataBaseRef.child(DatabaseTable.records.rawValue)
+        FirebaseHelper.getRecordReference()
             .observe(.childRemoved, with: { snapshot in
                 if var dictionary = snapshot.value as? [String: Any] {
                     dictionary["id"] = snapshot.key
@@ -37,13 +37,13 @@ extension FirebaseHelper {
     }
     
     static func deleteRecord(id: String) {
-        dataBaseRef.child(DatabaseTable.records.rawValue)
+        FirebaseHelper.getRecordReference()
             .child(id)
             .removeValue()
     }
     
     static func saveRecord(_ object: [String:Any]) {
-        dataBaseRef.child(DatabaseTable.records.rawValue)
+        FirebaseHelper.getRecordReference()
             .childByAutoId()
             .setValue(object)
     }

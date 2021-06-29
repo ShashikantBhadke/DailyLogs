@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import FirebaseAuth
 import FirebaseDatabase
 
 final class FirebaseHelper {
@@ -21,6 +22,14 @@ final class FirebaseHelper {
     static func initialSetUp() {
         Database.database().isPersistenceEnabled = true
         FirebaseHelper.dataBaseRef = Database.database().reference()
+    }
+    
+    static func getRecordReference() -> DatabaseReference {
+        return dataBaseRef.child(DatabaseTable.records.rawValue).child(Auth.auth().currentUser?.uid ?? "user")
+    }
+    
+    static func getCategoryReference() -> DatabaseReference {
+        return dataBaseRef.child(DatabaseTable.category.rawValue).child(Auth.auth().currentUser?.uid ?? "user")
     }
     
 }

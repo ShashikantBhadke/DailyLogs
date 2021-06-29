@@ -80,8 +80,15 @@ final class LoginController: UIViewController {
                 Observable.combineLatest(mailTextField.rx.text.orEmpty, passwordTextField.rx.text.orEmpty)
             )
             .subscribe(onNext: { mail, password in
-                debugPrint(mail, password)
-                //.createNewUser(mail: mail, password: password)
+                Auth.auth().createUser(withEmail: mail, password: password) { [weak self] _, error in
+                  guard let self = self else { return }
+                    if let errorMessage = error?.localizedDescription {
+                        Alert.show("", errorMessage)
+                    } else {
+                        self.saveData(mail, password)
+                        Alert.show("", "Acount created successfully please tap on login.")
+                    }
+                }
             })
             .disposed(by: disposeBag)
         

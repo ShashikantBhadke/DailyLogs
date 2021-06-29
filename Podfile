@@ -1,22 +1,14 @@
 target 'DailyLogs' do
   use_frameworks!
-
+  
   pod 'SwiftLint'
-
- pod 'RxSwift', '6.2.0'
-    pod 'RxCocoa', '6.2.0'
-
-
-  target 'DailyLogsTests' do
-    inherit! :search_paths
-
-pod 'RxBlocking', '6.2.0'
-    pod 'RxTest', '6.2.0'
-  end
-
-  target 'DailyLogsUITests' do
-  end
-
+  
+  pod 'RxSwift', '6.2.0'
+  pod 'RxCocoa', '6.2.0'
+  
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  
 end
 
 post_install do |installer|

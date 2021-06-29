@@ -15,11 +15,14 @@ final class CreateRecordViewModel {
     
     func isValid()-> Observable<Bool> {
         return record.asObservable().map { recordObject -> Bool in
-            if recordObject.amount < 0 {
+            if recordObject.amount.isEmpty || Double(recordObject.amount) ?? 0 == 0 {
                 return false
             }
             
             if recordObject.title.isEmpty {
+                return false
+            }
+            if recordObject.category.isEmpty {
                 return false
             }
             return true

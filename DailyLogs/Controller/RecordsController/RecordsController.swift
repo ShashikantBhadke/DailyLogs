@@ -8,26 +8,24 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import CoreData
+import Firebase
+import FirebaseAuth
 
 final class RecordsController: UIViewController {
     
     @IBOutlet weak var recordsTableView     : UITableView!
     @IBOutlet weak var createRecordButton   : UIButton!
-    @IBOutlet weak var startDateTextField   : UITextField!
-    @IBOutlet weak var endDateTextField     : UITextField!
-    @IBOutlet weak var searchRecordButton   : UIButton!
     @IBOutlet weak var creditedLabel        : UILabel!
     @IBOutlet weak var debitedLabel         : UILabel!
     @IBOutlet weak var balanceLabel         : UILabel!
-        
-    let startDatePicker = UIDatePicker()
-    let endDatePicker = UIDatePicker()
+    @IBOutlet weak var dateLabel            : UILabel!
     
-    let coreData = CoreData()
     let disposeBag = DisposeBag()
-    let userObject = PublishSubject<NSManagedObject>()
     let records = BehaviorRelay<[RecordModel]>(value: [])
+    let filteredRecords = BehaviorRelay<[RecordModel]>(value: [])
+    
+    var startTimeStamp = Date().startOfMonth().timestamp
+    var endTimeStamp = Date().endOfMonth().timestamp
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,108 +35,121 @@ final class RecordsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        fetchRecords()
     }
     
     func setUpView() {
         bindView()
-        setUpDates()
+        firebaseMethodsForRecords()
         setUpNavigation()
-        
-        searchRecordButton.setBorder(withColor: .systemIndigo, borderWidth: 1, cornerRadius: 5)
+    }
+    
+    func setUpDate() {
+        dateLabel.text = (Date(timestamp: startTimeStamp).getString() ?? "") + " - " + (Date(timestamp: endTimeStamp).getString() ?? "")
     }
     
     func setUpNavigation() {
         self.title = "Records"
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .automatic
-        self.navigationController?.navigationBar.sizeToFit()
-    }
-    
-    func setUpDates() {
-        startDateTextField.inputView = startDatePicker
-        endDateTextField.inputView = endDatePicker
-        startDatePicker.date = Date().startOfMonth()
-        endDatePicker.date = Date().endOfMonth()
-        startDateTextField.text = startDatePicker.date.getString() ?? ""
-        endDateTextField.text = endDatePicker.date.getString() ?? ""
-        
-        creditedLabel.textColor = .green
-        debitedLabel.textColor = .red
     }
     
     func bindView() {
-        records.asObservable()
+        filteredRecords.asObservable()
             .bind(to: recordsTableView.rx.items(cellIdentifier: String(describing: RecordCell.self), cellType: RecordCell.self)) { _, model, cell in
                 cell.setData(model)
             }
             .disposed(by: disposeBag)
         
-        records.asObservable()
+        filteredRecords.asObservable()
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                let creditedAmount = self.records.value
+                let creditedAmount = self.filteredRecords.value
                     .filter { $0.amountType == .credited }
                     .reduce(0) {
-                        return $0 + $1.amount
+                        return $0 + (Double($1.amount) ?? 0)
                     }
-                let debitedAmount = self.records.value
+                let debitedAmount = self.filteredRecords.value
                     .filter { $0.amountType == .debited }
                     .reduce(0) {
-                        return $0 + $1.amount
+                        return $0 + (Double($1.amount) ?? 0)
                     }
                 self.setAmount(credited: creditedAmount, debited: debitedAmount)
             })
             .disposed(by: disposeBag)
         
-        startDatePicker.rx
-            .controlEvent(.valueChanged)
-            .subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.startDateTextField.text = self.startDatePicker.date.getString() ?? ""
-        })
-        .disposed(by: disposeBag)
-        
-        endDatePicker.rx
-            .controlEvent(.valueChanged)
-            .subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.endDateTextField.text = self.endDatePicker.date.getString() ?? ""
-        })
-        .disposed(by: disposeBag)
-        
-        searchRecordButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.coreData.fetchRecords(startDate: self.startDatePicker.date as NSDate, endDate: self.endDatePicker.date as NSDate)
-        })
-        .disposed(by: disposeBag)
+        recordsTableView.rx.itemDeleted
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.deleteRecord(indexPath.row)
+            })
+            .disposed(by: disposeBag)
     }
     
     @IBAction private func onCreateNewRecordButtonPressed(_ sender: UIButton) {
         pushCreateRecordController()
     }
     
-    func pushCreateRecordController() {
-        coreData.getTotalSum()
+    @IBAction private func onFilterButtonPressed(_ sender: UIBarButtonItem) {
+        pushFilterController()
+    }
+    @IBAction private func onLogoutButtonPressed(_ sender: UIBarButtonItem) {
+        do {
+            try Auth.auth().signOut()
+            pushLoginController()
+        } catch {
+            Alert.show("", error.localizedDescription)
+        }
         
+    }
+    
+    func pushCreateRecordController() {
         guard let createRecordController = UIStoryboard.records.instantiateViewController(withIdentifier: String(describing: CreateRecordController.self)) as? CreateRecordController else { return }
         self.navigationController?.pushViewController(createRecordController, animated: true)
     }
     
-    func fetchRecords() {
-        coreData.records.subscribe(onNext: { [weak self] records in
-            self?.records.accept(records)
-        })
-        .disposed(by: disposeBag)
-        coreData.error.subscribe(onNext: { errorMessage in
-            debugPrint(errorMessage)
-        })
-        .disposed(by: disposeBag)
-        coreData.loading.subscribe(onNext: { isLoading in
-            debugPrint(isLoading)
-        })
-        .disposed(by: disposeBag)
-        coreData.fetchRecords(startDate: startDatePicker.date as NSDate, endDate: endDatePicker.date as NSDate)
+    private func pushLoginController() {
+        guard let loginController = UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: LoginController.self)) as? LoginController else { return }
+        self.navigationController?.setViewControllers([loginController], animated: true)
+    }
+    private func pushFilterController() {
+        guard let filterController = UIStoryboard.records.instantiateViewController(withIdentifier: String(describing: FilterController.self)) as? FilterController else { return }
+        filterController.startDate.accept(Date(timestamp: startTimeStamp))
+        filterController.endDate.accept(Date(timestamp: endTimeStamp))
+        filterController.onApplyFilter = { [weak self] (startTime, endTime) in
+            guard let self = self else { return }
+            self.startTimeStamp = startTime
+            self.endTimeStamp = endTime
+            let arrRecords = self.records.value
+            self.filterRecords(arrRecords)
+        }
+        self.navigationController?.pushViewController(filterController, animated: true)
+    }
+    
+    func firebaseMethodsForRecords() {
+        FirebaseHelper.observeNewAddedRecord()
+        FirebaseHelper.observeRemoveRecord()
+        FirebaseHelper.newRecord
+            .subscribe(onNext: { [weak self] record in
+                guard let self = self else { return }
+                var arrRecords = self.records.value
+                arrRecords.append(record)
+                self.records.accept(arrRecords)
+                self.filterRecords(arrRecords)
+            })
+            .disposed(by: disposeBag)
+        
+        FirebaseHelper.deletedRecord
+            .subscribe(onNext: {[weak self] record in
+                guard let self = self else { return }
+                var arrRecords = self.records.value
+                arrRecords = arrRecords.filter {$0 != record}
+                self.records.accept(arrRecords)
+                self.filterRecords(self.records.value)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func deleteRecord(_ indexPathRow: Int) {
+        let recordToDelete = self.filteredRecords.value[indexPathRow]
+        FirebaseHelper.deleteRecord(id: recordToDelete.id)
     }
     
     func setAmount(credited: Double, debited: Double) {
@@ -147,6 +158,18 @@ final class RecordsController: UIViewController {
         let balanceAmount = credited - debited
         balanceLabel.text = "\(balanceAmount)"
         balanceLabel.textColor = balanceAmount >= 0 ? .green : .red
+    }
+    
+    func filterRecords(_ arrRecords: [RecordModel]) {
+        var filteredRecords = arrRecords
+        filteredRecords = filteredRecords
+            .filter {
+                $0.timeStamp >= startTimeStamp && $0.timeStamp <= endTimeStamp
+            }
+            .sorted {$0.timeStamp > $1.timeStamp}
+        
+        self.filteredRecords.accept(filteredRecords)
+        self.setUpDate()
     }
     
     override func didReceiveMemoryWarning() {

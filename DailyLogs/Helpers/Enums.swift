@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AmountType: Int {
+enum AmountType: Int, Codable {
     case unknown = -1
     case credited = 0
     case debited = 1

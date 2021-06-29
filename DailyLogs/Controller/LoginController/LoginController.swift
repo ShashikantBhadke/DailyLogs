@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import CoreData
+import Firebase
 
 final class LoginController: UIViewController {
 
@@ -20,14 +20,12 @@ final class LoginController: UIViewController {
     @IBOutlet weak var showPasswordButton       : UIButton!
     @IBOutlet weak var viewShowPasswordButton   : UIView!
     
-    let coreData = CoreData()
     let disposeBag = DisposeBag()
     let loginViewModel = LoginViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        bindView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,8 +34,6 @@ final class LoginController: UIViewController {
     }
     
     func setUpView() {
-        bindCoreDataModel()
-        
         loginButton.setCorner(withRadius: 10)
         registerButton.setCorner(withRadius: 10)
         passwordTextField.rightView = viewShowPasswordButton
@@ -48,6 +44,15 @@ final class LoginController: UIViewController {
             mailTextField.text = UserData.returnValue(.mail) as? String ?? ""
             passwordTextField.text = UserData.returnValue(.password) as? String ?? ""
         }
+        
+        if Auth.auth().currentUser != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                guard let self = self else { return }
+                self.pushRecordsController()
+            }
+            return
+        }
+        bindView()
     }
     
     func bindView() {
@@ -56,8 +61,17 @@ final class LoginController: UIViewController {
             .withLatestFrom(
                 Observable.combineLatest(mailTextField.rx.text.orEmpty, passwordTextField.rx.text.orEmpty)
             )
-            .subscribe(onNext: { [weak self] mail, password in
-                self?.coreData.login(mail: mail, password: password)
+            .subscribe(onNext: { mail, password in
+                debugPrint(mail, password)
+                Auth.auth().signIn(withEmail: mail, password: password) { [weak self] _, error in
+                  guard let self = self else { return }
+                    if let errorMessage = error?.localizedDescription {
+                        Alert.show("", errorMessage)
+                    } else {
+                        self.saveData(mail, password)
+                        self.pushRecordsController()
+                    }
+                }
             })
             .disposed(by: disposeBag)
         
@@ -65,8 +79,16 @@ final class LoginController: UIViewController {
             .withLatestFrom(
                 Observable.combineLatest(mailTextField.rx.text.orEmpty, passwordTextField.rx.text.orEmpty)
             )
-            .subscribe(onNext: { [weak self] mail, password in
-                self?.coreData.createNewUser(mail: mail, password: password)
+            .subscribe(onNext: { mail, password in
+                Auth.auth().createUser(withEmail: mail, password: password) { [weak self] _, error in
+                  guard let self = self else { return }
+                    if let errorMessage = error?.localizedDescription {
+                        Alert.show("", errorMessage)
+                    } else {
+                        self.saveData(mail, password)
+                        Alert.show("", "Acount created successfully please tap on login.")
+                    }
+                }
             })
             .disposed(by: disposeBag)
         
@@ -104,41 +126,15 @@ final class LoginController: UIViewController {
         loginViewModel.isValid().map {$0 ? 1 : 0.3}.bind(to: loginButton.rx.alpha).disposed(by: disposeBag)
     }
     
-    func bindCoreDataModel() {
-        coreData.login.subscribe(onNext: { [weak self] users in
-            guard let self = self, let user = users.first else { return }
-            if self.rememberPasswordButton.isSelected {
-                UserData.saveData(.mail, user.mail ?? "")
-                UserData.saveData(.password, user.password ?? "")
-            }
-            self.pushRecordsController(user)
-        })
-        .disposed(by: disposeBag)
-        coreData.register.subscribe(onNext: { users in
-            _ = users.map {
-                debugPrint($0.mail ?? "")
-            }
-        })
-        .disposed(by: disposeBag)
-        coreData.error.subscribe(onNext: { errorMessage in
-            debugPrint(errorMessage)
-        })
-        .disposed(by: disposeBag)
-        coreData.loading.subscribe(onNext: { isLoading in
-            debugPrint(isLoading)
-        })
-        .disposed(by: disposeBag)
+    func saveData(_ mail: String, _ password: String) {
+        if rememberPasswordButton.isSelected {
+            UserData.saveData(.mail, mail)
+            UserData.saveData(.password, password)
+        }
     }
     
-    func stopListner() {
-        coreData.users.dispose()
-        coreData.error.dispose()
-        coreData.loading.dispose()
-    }
-    
-    func pushRecordsController(_ userObject: NSManagedObject) {
+    func pushRecordsController() {
         guard let recordsController = UIStoryboard.records.instantiateViewController(withIdentifier: String(describing: RecordsController.self)) as? RecordsController else { return }
-        recordsController.userObject.onNext(userObject)
         self.navigationController?.viewControllers = [recordsController]
         
     }

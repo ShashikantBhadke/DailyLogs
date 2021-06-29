@@ -9,6 +9,14 @@ import Foundation
 
 extension Date {
     
+    init(timestamp:Int64) {
+        self = Date(timeIntervalSince1970: TimeInterval(timestamp))
+    }
+    
+    var timestamp:Int64 {
+        return Int64((self.timeIntervalSince1970).rounded())
+    }
+    
     func getString() -> String? {
         let dateformatter = DateFormatter.getFormatter
         return dateformatter.string(from: self)

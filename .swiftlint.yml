@@ -29,3 +29,6 @@ identifier_name:
     - id
     - URL
     - GlobalAPIKey
+    - lhs
+    - rhs
+    - key

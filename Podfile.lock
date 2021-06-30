@@ -1,4 +1,5 @@
 PODS:
+  - Differentiator (5.0.0)
   - Firebase/Auth (8.2.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.2.0)
@@ -54,6 +55,10 @@ PODS:
   - RxCocoa (6.2.0):
     - RxRelay (= 6.2.0)
     - RxSwift (= 6.2.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
   - RxRelay (6.2.0):
     - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
@@ -63,11 +68,13 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Database
   - RxCocoa (= 6.2.0)
+  - RxDataSources (= 5.0.0)
   - RxSwift (= 6.2.0)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - Differentiator
     - Firebase
     - FirebaseAuth
     - FirebaseCore
@@ -80,11 +87,13 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - RxCocoa
+    - RxDataSources
     - RxRelay
     - RxSwift
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Firebase: 12c568897b807321964e89d2b263ef4c6cff3db6
   FirebaseAuth: 4c4fb0ba1a169f3acb4aa5b724f7ae7c0999ee44
   FirebaseCore: 3a83f24c3de69ec9f9a426e2598125ea51f3a2ce
@@ -97,10 +106,11 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
 
-PODFILE CHECKSUM: 6e9fdd663efde5e5877e0e7de157f18d2f213175
+PODFILE CHECKSUM: ea1cf200f0a66275dcc52b646fc701b329c67bf5
 
 COCOAPODS: 1.10.1

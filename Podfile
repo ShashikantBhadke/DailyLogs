@@ -5,6 +5,7 @@ target 'DailyLogs' do
   
   pod 'RxSwift', '6.2.0'
   pod 'RxCocoa', '6.2.0'
+  pod 'RxDataSources', '5.0.0'
   
   pod 'Firebase/Auth'
   pod 'Firebase/Database'

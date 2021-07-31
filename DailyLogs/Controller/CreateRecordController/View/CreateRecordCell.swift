@@ -18,6 +18,7 @@ final class CreateRecordCell: UITableViewCell {
     @IBOutlet weak var dateTextField            : UITextField!
     @IBOutlet weak var categoryTextField        : UITextField!
     
+    var record: RecordModel?
     var onCategoryType: (() -> Void)?
     var onRecordUpdate: ((RecordModel) -> Void)?
     
@@ -79,8 +80,8 @@ final class CreateRecordCell: UITableViewCell {
         let obser6 = categoryTextField.rx.text.orEmpty
         
         let observableCombine =  Observable
-            .combineLatest(obser1, obser2, obser3, obser4, obser5, obser6) { (amountType, amount, title, detail, date, category) -> RecordModel in
-            let recordObj = RecordModel(amountType: amountType ?? .credited, amount: amount, title: title, timeStamp: date?.timestamp ?? 0, detail: detail, category: category)
+            .combineLatest(obser1, obser2, obser3, obser4, obser5, obser6) { [weak self] (amountType, amount, title, detail, date, category) -> RecordModel in
+                let recordObj = RecordModel(id: self?.record?.id ?? "", amountType: amountType ?? .credited, amount: amount, title: title, timeStamp: date?.timestamp ?? 0, detail: detail, category: category)
             return recordObj
         }
         
@@ -92,12 +93,13 @@ final class CreateRecordCell: UITableViewCell {
     }
 
     func setUpData(_ recordObj: RecordModel) {
+        record = recordObj
         amountTextField.text = "\(recordObj.amount)"
         titleTextField.text = recordObj.title
         detailTextView.text = recordObj.detail
         dateTextField.text = Date(timestamp: recordObj.timeStamp).getString()
         categoryTextField.text = recordObj.category
-        
+        amountTypeSegmentControl.selectedSegmentIndex = recordObj.amountType.rawValue
         disposeBag = DisposeBag()
         setUpView()
     }

@@ -35,14 +35,14 @@ extension FirebaseHelper {
             }
     }
     
-    static func deleteCategory(id: String) {
+    static func deleteCategory(recordId: String) {
         FirebaseHelper.getCategoryReference()
-            .child(id)
+            .child(recordId)
             .removeValue()
     }
     
-    static func saveOrUpdateCategory(id: String? = nil, _ object: [String:Any]) {
-        if let strId = id {
+    static func saveOrUpdateCategory(recordId: String? = nil, _ object: [String:Any]) {
+        if let strId = recordId {
             FirebaseHelper.getCategoryReference()
                 .child(strId)
                 .setValue(object)

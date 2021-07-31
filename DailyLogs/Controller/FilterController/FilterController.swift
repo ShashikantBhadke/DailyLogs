@@ -68,7 +68,7 @@ final class FilterController: UIViewController {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.view.endEditing(true)
-                self.onApplyFilter?(self.startDate.value.timestamp, self.endDate.value.timestamp)
+                self.onApplyFilter?(self.startDate.value.removeTimeStamp.timestamp, self.endDate.value.removeTimeStamp.timestamp)
                 self.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)

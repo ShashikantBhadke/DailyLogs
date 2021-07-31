@@ -12,3 +12,12 @@ enum AmountType: Int, Codable {
     case credited = 0
     case debited = 1
 }
+
+enum PaymentMethod: String {
+    case card = "Card"
+    case cash = "Cash"
+    case gpay = "GPay"
+    case phonepe = "PhonePe"
+    case sbi = "SBI"
+    case icici = "ICICI"
+}

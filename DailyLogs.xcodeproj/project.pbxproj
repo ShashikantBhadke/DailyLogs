@@ -28,6 +28,7 @@
 		6E5D132526847BAC003E227B /* CreateRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D132426847BAC003E227B /* CreateRecordViewModel.swift */; };
 		6E5D132726848449003E227B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D132626848449003E227B /* Date.swift */; };
 		6E5D13292684847C003E227B /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5D13282684847C003E227B /* DateFormatter.swift */; };
+		6E67AD87268ED5F400150C47 /* RecordControllerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E67AD86268ED5F400150C47 /* RecordControllerText.swift */; };
 		6E782E9E268855BE00411C1F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E782E9D268855BE00411C1F /* CloudKit.framework */; };
 		6E782EC326885C9800411C1F /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E782EC226885C9800411C1F /* Firebase.swift */; };
 		6E782EC526885F3D00411C1F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E782EC426885F3D00411C1F /* GoogleService-Info.plist */; };
@@ -86,6 +87,7 @@
 		6E5D132426847BAC003E227B /* CreateRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecordViewModel.swift; sourceTree = "<group>"; };
 		6E5D132626848449003E227B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		6E5D13282684847C003E227B /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		6E67AD86268ED5F400150C47 /* RecordControllerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordControllerText.swift; sourceTree = "<group>"; };
 		6E782E9C268855BA00411C1F /* DailyLogs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyLogs.entitlements; sourceTree = "<group>"; };
 		6E782E9D268855BE00411C1F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		6E782EC226885C9800411C1F /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 			children = (
 				6EC9D7E026836FBD00846EFE /* DailyLogsTests.swift */,
 				6E5D130626845E83003E227B /* LoginControllerTexts.swift */,
+				6E67AD86268ED5F400150C47 /* RecordControllerText.swift */,
 				6EC9D7E226836FBD00846EFE /* Info.plist */,
 			);
 			path = DailyLogsTests;
@@ -612,6 +615,7 @@
 			files = (
 				6E5D130726845E83003E227B /* LoginControllerTexts.swift in Sources */,
 				6EC9D7E126836FBD00846EFE /* DailyLogsTests.swift in Sources */,
+				6E67AD87268ED5F400150C47 /* RecordControllerText.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,7 +766,7 @@
 				CODE_SIGN_ENTITLEMENTS = DailyLogs/DailyLogs.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.4;
+				CURRENT_PROJECT_VERSION = 1.6;
 				DEVELOPMENT_TEAM = D946FFLAN9;
 				INFOPLIST_FILE = DailyLogs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -787,7 +791,7 @@
 				CODE_SIGN_ENTITLEMENTS = DailyLogs/DailyLogs.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.4;
+				CURRENT_PROJECT_VERSION = 1.6;
 				DEVELOPMENT_TEAM = D946FFLAN9;
 				INFOPLIST_FILE = DailyLogs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

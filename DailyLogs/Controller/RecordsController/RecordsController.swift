@@ -18,9 +18,9 @@ final class RecordsController: UIViewController {
     @IBOutlet weak var createRecordButton   : UIButton!
     
     let disposeBag = DisposeBag()
-    let section = BehaviorRelay<[TableViewSection]>(value: [])
-    
+    var totalBalanceAmount = 0.0
     let records = BehaviorRelay<[RecordModel]>(value: [])
+    let section = BehaviorRelay<[TableViewSection]>(value: [])
     
     let dataSource = RxTableViewSectionedReloadDataSource<TableViewSection>(
       configureCell: { _, tableView, indexPath, item in
@@ -29,6 +29,7 @@ final class RecordsController: UIViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RecordHeaderCell.self)) as? RecordHeaderCell,
                 let spedingObject = item as? SpendingDetailsModel
             else { return RecordHeaderCell() }
+            
             cell.setData(spedingObject)
             return cell
         } else {
@@ -79,6 +80,14 @@ final class RecordsController: UIViewController {
                 self?.deleteRecord(indexPath.row)
             })
             .disposed(by: disposeBag)
+        recordsTableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self,
+                      let records = self.section.value.last?.items as? [RecordModel],
+                      records.count > indexPath.row else { return }
+                self.pushCreateRecordController(editRecord: records[indexPath.row])
+            })
+            .disposed(by: disposeBag)
     }
     
     @IBAction private func onCreateNewRecordButtonPressed(_ sender: UIButton) {
@@ -98,8 +107,11 @@ final class RecordsController: UIViewController {
         
     }
     
-    func pushCreateRecordController() {
+    func pushCreateRecordController(editRecord: RecordModel? = nil) {
         guard let createRecordController = UIStoryboard.records.instantiateViewController(withIdentifier: String(describing: CreateRecordController.self)) as? CreateRecordController else { return }
+        if let record = editRecord {
+            createRecordController.recordViewModel.record.accept(record)
+        }
         self.navigationController?.pushViewController(createRecordController, animated: true)
     }
     
@@ -124,6 +136,7 @@ final class RecordsController: UIViewController {
     
     func firebaseMethodsForRecords() {
         FirebaseHelper.observeNewAddedRecord()
+        FirebaseHelper.observeRecordUpdate()
         FirebaseHelper.observeRemoveRecord()
         FirebaseHelper.newRecord
             .subscribe(onNext: { [weak self] record in
@@ -132,6 +145,19 @@ final class RecordsController: UIViewController {
                 arrRecords.append(record)
                 self.records.accept(arrRecords)
                 self.filterRecords(arrRecords)
+                self.getOverAllData()
+            })
+            .disposed(by: disposeBag)
+        
+        FirebaseHelper.updatedRecord
+            .subscribe(onNext: { [weak self] record in
+                guard let self = self else { return }
+                var arrRecords = self.records.value
+                arrRecords.removeAll {record.id == $0.id}
+                arrRecords.append(record)
+                self.records.accept(arrRecords)
+                self.filterRecords(arrRecords)
+                self.getOverAllData()
             })
             .disposed(by: disposeBag)
         
@@ -142,6 +168,7 @@ final class RecordsController: UIViewController {
                 arrRecords = arrRecords.filter {$0 != record}
                 self.records.accept(arrRecords)
                 self.filterRecords(self.records.value)
+                self.getOverAllData()
             })
             .disposed(by: disposeBag)
     }
@@ -150,7 +177,7 @@ final class RecordsController: UIViewController {
         guard let records = section.value.last?.items as? [RecordModel],
               records.count > indexPathRow else { return }
         let recordToDelete = records[indexPathRow]
-        FirebaseHelper.deleteRecord(id: recordToDelete.id)
+        FirebaseHelper.deleteRecord(recordId: recordToDelete.id)
     }
     
     func filterRecords(_ arrRecords: [RecordModel]) {
@@ -171,12 +198,11 @@ final class RecordsController: UIViewController {
             .reduce(0) {
                 return $0 + (Double($1.amount) ?? 0)
             }
-        
-        self.setNewData(credited: creditedAmount, debited: debitedAmount, arrRecords: filteredRecords)
+        getOverAllData()
+        setNewData(credited: creditedAmount, debited: debitedAmount, arrRecords: filteredRecords)
     }
     
     func setNewData(credited: Double, debited: Double, arrRecords: [RecordModel]) {
-        let totalBalanceObj = self.getOverAllData()
         if let arrSpending = section.value.first?.items as? [SpendingDetailsModel], let spending = arrSpending.first {
             var spendingObj = spending
             spendingObj.credited = "\(credited)"
@@ -186,9 +212,10 @@ final class RecordsController: UIViewController {
             spendingObj.balanceColor = balanceAmount >= 0 ? .green : .red
             spendingObj.date = (Date(timestamp: startTimeStamp).getString() ?? "") + " - " + (Date(timestamp: endTimeStamp).getString() ?? "")
             
-            let totalBalance = totalBalanceObj.0 - totalBalanceObj.1
-            spendingObj.balanceColor = totalBalance >= 0 ? .green : .red
-            spendingObj.totalBalance = "\(totalBalance - balanceAmount)"
+            let lastTotalAmount = totalBalanceAmount - balanceAmount
+            spendingObj.balanceColor = lastTotalAmount >= 0 ? .green : .red
+            spendingObj.totalBalance = "\(lastTotalAmount)"
+            
             var arrItems = section.value
             arrItems[0].items = [spendingObj]
             arrItems[1].items = arrRecords
@@ -202,6 +229,10 @@ final class RecordsController: UIViewController {
             spendingObj.balanceColor = balanceAmount >= 0 ? .green : .red
             spendingObj.date = (Date(timestamp: startTimeStamp).getString() ?? "") + " - " + (Date(timestamp: endTimeStamp).getString() ?? "")
             
+            let lastTotalAmount = totalBalanceAmount - balanceAmount
+            spendingObj.balanceColor = lastTotalAmount >= 0 ? .green : .red
+            spendingObj.totalBalance = "\(lastTotalAmount)"
+            
             var arrItems = [TableViewSection]()
             arrItems.append(TableViewSection(header: "", items: [spendingObj]))
             arrItems.append(TableViewSection(header: "", items: arrRecords))
@@ -209,19 +240,18 @@ final class RecordsController: UIViewController {
         }
     }
     
-    func getOverAllData() -> (Double, Double) {
+    func getOverAllData() {
         let creditedAmount = records.value
-            .filter { $0.amountType == .credited }
+            .filter { $0.amountType == .credited && $0.timeStamp <= self.endTimeStamp }
             .reduce(0) {
                 return $0 + (Double($1.amount) ?? 0)
             }
         let debitedAmount = records.value
-            .filter { $0.amountType == .debited }
+            .filter { $0.amountType == .debited  && $0.timeStamp <= self.endTimeStamp}
             .reduce(0) {
                 return $0 + (Double($1.amount) ?? 0)
             }
-        
-        return (creditedAmount, debitedAmount)
+        totalBalanceAmount = creditedAmount - debitedAmount
     }
     
     override func didReceiveMemoryWarning() {

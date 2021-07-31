@@ -17,6 +17,11 @@ extension Date {
         return Int64((self.timeIntervalSince1970).rounded())
     }
     
+    var removeTimeStamp : Date {
+        let date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: self))
+        return date!
+    }
+    
     func getString() -> String? {
         let dateformatter = DateFormatter.getFormatter
         return dateformatter.string(from: self)

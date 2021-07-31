@@ -15,6 +15,7 @@ final class FirebaseHelper {
     static var dataBaseRef: DatabaseReference!
     
     static var newRecord = PublishSubject<RecordModel>()
+    static var updatedRecord = PublishSubject<RecordModel>()
     static var deletedRecord = PublishSubject<RecordModel>()
     
     static var category = PublishSubject<CategoryModel>()

@@ -5,8 +5,8 @@
 //  Created by Shashikant Bhadke on 27/06/21.
 //
 
-import Foundation
 import RxSwift
+import Foundation
 import FirebaseDatabase
 
 extension FirebaseHelper {
@@ -24,6 +24,18 @@ extension FirebaseHelper {
             })
     }
     
+    static func observeRecordUpdate() {
+        FirebaseHelper.getRecordReference()
+            .observe(.childChanged, with: { snapshot in
+                if var dictionary = snapshot.value as? [String: Any] {
+                    dictionary["id"] = snapshot.key
+                    if let recordObject = RecordModel.getObject(dictionary: dictionary) {
+                        updatedRecord.onNext(recordObject)
+                    }
+                }
+            })
+    }
+    
     static func observeRemoveRecord() {
         FirebaseHelper.getRecordReference()
             .observe(.childRemoved, with: { snapshot in
@@ -36,16 +48,23 @@ extension FirebaseHelper {
             })
     }
     
-    static func deleteRecord(id: String) {
+    static func deleteRecord(recordId: String) {
         FirebaseHelper.getRecordReference()
-            .child(id)
+            .child(recordId)
             .removeValue()
     }
     
     static func saveRecord(_ object: [String:Any]) {
-        FirebaseHelper.getRecordReference()
-            .childByAutoId()
-            .setValue(object)
+        if let recordId = object["id"] as? String,
+           !recordId.isEmpty {
+            FirebaseHelper.getRecordReference()
+                .child(recordId)
+                .setValue(object)
+        } else {
+            FirebaseHelper.getRecordReference()
+                .childByAutoId()
+                .setValue(object)
+        }
     }
     
 }

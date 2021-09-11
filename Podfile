@@ -12,6 +12,8 @@ target 'DailyLogs' do
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
   
+  pod 'IQKeyboardManagerSwift'
+
 end
 
 post_install do |installer|

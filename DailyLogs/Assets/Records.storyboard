@@ -402,11 +402,11 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="773"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CreateRecordCell" rowHeight="715" id="yfL-b2-WMQ" customClass="CreateRecordCell" customModule="DailyLogs" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="715"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CreateRecordCell" rowHeight="653" id="yfL-b2-WMQ" customClass="CreateRecordCell" customModule="DailyLogs" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="653"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yfL-b2-WMQ" id="89o-zo-5ZS">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="715"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="653"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="n5c-dT-Lpx">
@@ -581,7 +581,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="n5c-dT-Lpx" secondAttribute="trailing" constant="20" id="3AP-QV-mij"/>
-                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="n5c-dT-Lpx" secondAttribute="bottom" constant="30" id="8VJ-2b-s5t"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="n5c-dT-Lpx" secondAttribute="bottom" constant="20" id="8VJ-2b-s5t"/>
                                                 <constraint firstItem="n5c-dT-Lpx" firstAttribute="top" secondItem="89o-zo-5ZS" secondAttribute="top" constant="20" id="uy0-VG-uSe"/>
                                                 <constraint firstItem="n5c-dT-Lpx" firstAttribute="leading" secondItem="89o-zo-5ZS" secondAttribute="leading" constant="20" id="xPd-K4-SYv"/>
                                             </constraints>

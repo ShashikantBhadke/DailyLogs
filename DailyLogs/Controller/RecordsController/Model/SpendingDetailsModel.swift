@@ -15,7 +15,7 @@ struct SpendingDetailsModel {
     var debited = ""
     var balanceColor = UIColor.black
     var totalBalance = ""
-    var totalBalanceColor = UIColor.black
+    var totalBalanceColor = UIColor.systemGray2
 }
 
 struct TableViewSection {

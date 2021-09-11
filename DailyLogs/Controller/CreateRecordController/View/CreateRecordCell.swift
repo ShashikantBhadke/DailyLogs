@@ -17,6 +17,8 @@ final class CreateRecordCell: UITableViewCell {
     @IBOutlet weak var detailTextView           : UITextView!
     @IBOutlet weak var dateTextField            : UITextField!
     @IBOutlet weak var categoryTextField        : UITextField!
+    @IBOutlet weak var paymentModeTextField     : UITextField!
+    @IBOutlet weak var fromModeTextField        : UITextField!
     
     var record: RecordModel?
     var onCategoryType: (() -> Void)?
@@ -78,10 +80,12 @@ final class CreateRecordCell: UITableViewCell {
         let obser4 = detailTextView.rx.text.orEmpty
         let obser5 = dateTextField.rx.text.orEmpty.map {$0.getDate()}
         let obser6 = categoryTextField.rx.text.orEmpty
+        let obser7 = paymentModeTextField.rx.text.orEmpty
+        let obser8 = fromModeTextField.rx.text.orEmpty
         
         let observableCombine =  Observable
-            .combineLatest(obser1, obser2, obser3, obser4, obser5, obser6) { [weak self] (amountType, amount, title, detail, date, category) -> RecordModel in
-                let recordObj = RecordModel(id: self?.record?.id ?? "", amountType: amountType ?? .credited, amount: amount, title: title, timeStamp: date?.timestamp ?? 0, detail: detail, category: category)
+            .combineLatest(obser1, obser2, obser3, obser4, obser5, obser6, obser7, obser8) { [weak self] (amountType, amount, title, detail, date, category, mode, from) -> RecordModel in
+                let recordObj = RecordModel(id: self?.record?.id ?? "", amountType: amountType ?? .credited, amount: amount, title: title, timeStamp: date?.timestamp ?? 0, detail: detail, category: category, paymentMode: mode, fromMode: from)
             return recordObj
         }
         
@@ -100,6 +104,8 @@ final class CreateRecordCell: UITableViewCell {
         dateTextField.text = Date(timestamp: recordObj.timeStamp).getString()
         categoryTextField.text = recordObj.category
         amountTypeSegmentControl.selectedSegmentIndex = recordObj.amountType.rawValue
+        paymentModeTextField.text = recordObj.paymentMode
+        fromModeTextField.text = recordObj.fromMode
         disposeBag = DisposeBag()
         setUpView()
     }

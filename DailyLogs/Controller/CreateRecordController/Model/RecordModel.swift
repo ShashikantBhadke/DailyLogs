@@ -15,6 +15,8 @@ struct RecordModel: Codable, Equatable {
     var timeStamp: Int64 = Date().timestamp
     var detail: String?
     var category: String = ""
+    var paymentMode: String?
+    var fromMode: String?
     
     static func getDummy() -> RecordModel {
         return RecordModel(amountType: .unknown)

@@ -213,7 +213,7 @@ final class RecordsController: UIViewController {
             spendingObj.date = (Date(timestamp: startTimeStamp).getString() ?? "") + " - " + (Date(timestamp: endTimeStamp).getString() ?? "")
             
             let lastTotalAmount = totalBalanceAmount - balanceAmount
-            spendingObj.balanceColor = lastTotalAmount >= 0 ? .green : .red
+            spendingObj.totalBalanceColor = lastTotalAmount >= 0 ? .green : .red
             spendingObj.totalBalance = "\(lastTotalAmount)"
             
             var arrItems = section.value
@@ -230,7 +230,7 @@ final class RecordsController: UIViewController {
             spendingObj.date = (Date(timestamp: startTimeStamp).getString() ?? "") + " - " + (Date(timestamp: endTimeStamp).getString() ?? "")
             
             let lastTotalAmount = totalBalanceAmount - balanceAmount
-            spendingObj.balanceColor = lastTotalAmount >= 0 ? .green : .red
+            spendingObj.totalBalanceColor = lastTotalAmount >= 0 ? .green : .red
             spendingObj.totalBalance = "\(lastTotalAmount)"
             
             var arrItems = [TableViewSection]()

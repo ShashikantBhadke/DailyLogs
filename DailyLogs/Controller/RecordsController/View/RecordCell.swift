@@ -11,6 +11,7 @@ final class RecordCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel       : UILabel!
     @IBOutlet weak var detailsLabel     : UILabel!
+    @IBOutlet weak var modeLabel        : UILabel!
     @IBOutlet weak var amountLabel      : UILabel!
     @IBOutlet weak var dateLabel	    : UILabel!
     @IBOutlet weak var viewBackground   : UIView!
@@ -22,6 +23,14 @@ final class RecordCell: UITableViewCell {
     func setData(_ record: RecordModel) {
         titleLabel.text = record.title
         detailsLabel.text = record.category + "\n" + (record.detail ?? "")
+        if let mode = record.paymentMode,
+           let fromMode = record.fromMode,
+           !mode.isEmpty, !fromMode.isEmpty {
+            modeLabel.text = "Payment Mode: \(record.paymentMode ?? ""), Bank: \(record.fromMode ?? "")"
+            modeLabel.isHidden = false
+        } else {
+            modeLabel.isHidden = true
+        }
         dateLabel.text = Date(timestamp: record.timeStamp).getString() ?? ""
         
         switch record.amountType {
